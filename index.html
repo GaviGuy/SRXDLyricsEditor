@@ -5,7 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A web-based application for creating and previewing lyrics for Spin Rhythm XD">
     <title>SRXD Lyrics Editor</title>
+    <script defer type="text/javascript" src="main.js"></script>   
+
 </head>
 <body>
-    hi!
+    <br>
+    Input a single line of Japanese lyrics here.<br>
+
+    <textarea id="input-japanese"></textarea>
+    <br>
+    <button onclick="generateRomaji()">Generate Romaji (unfinished)</button>
+    <br>
+    <br>
+    
+    Generated Romaji goes here. Check it for accuracy, correct pacing, etc.<br>
+    A space indicates the start of a new kana.<br>
+    A | (pipe symbol) indicates the start of a new word.<br>
+    <textarea id="input-romaji"></textarea>
+    <br>
+    <button onclick="generateLyricString()">Copy Output to Clipboard</button>
 </body>
