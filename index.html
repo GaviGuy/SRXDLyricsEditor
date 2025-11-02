@@ -33,12 +33,24 @@
                 <button onclick="generateLyricString()">Copy Output to Clipboard</button>
             </div>
             <div>
+                As an example, the first Japanese line from Lovesick.</br>
+                I put this line into the top box:<br>
+                <b>諦めましょうこの人生</b><br><br>
+                For the next box, I need to match <i>every</i> kana with a pronounciation.<br>
+                Here's the first step, romaji:<br>
+                <b>akiramemashou kono jinsei</b><br><br>
+                Next, to assist the program, I will put pipes between each word,<br>
+                and spaces between each kana's pronunciation:<br>
+                <b>akira me ma sh o u | ko no | jin sei</b><br><br>
+                Notice how the number of kana and the number of pronounced chunks match.<br><br>
+                With both boxes populated, I can click "Copy Output to Clipboard" and<br>
+                paste into the Spin Rhythm lyric editor.<br>
             </div>
         </div>
         <div class="column-right">
             <div id="config">
                 <div>
-                    <input onchange="readParameters(0)" type="number" value="15" title="Kana spacing"
+                    <input onchange="readParameters(0)" type="number" value="12" title="Kana spacing"
                             step=1 id="config-kana-spacing">Horizontal kana spacing</input>
                     <button onClick="revertConfig(0)">default</button>
                 </div>
