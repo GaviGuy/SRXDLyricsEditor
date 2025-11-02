@@ -41,6 +41,7 @@ body {
 
 .lyrics-container {
     position: absolute;
+    pointer-events: none;
     margin-top: 2rem;
     gap: 0rem;
     padding: 0rem;
