@@ -1,3 +1,71 @@
+const availableSpace = 15;
+const defaultKanaSpacing = 1.2;
+const defaultKanaSize = 1;
+const defaultRomajiSize = 0.6;
+const defaultRomajiHeight = 1;
+
+let kanaSpacing = 1.2;
+let kanaSize = 1;
+let romajiSize = 0.6;
+let romajiHeight = 1;
+
+async function init() {
+    readParameters(0);
+    readParameters(1);
+    readParameters(2);
+    readParameters(3);
+}
+init();
+
+function readParameters (index) {
+    let element;
+    switch(index) {
+        case 0:
+            element = document.getElementById("config-kana-spacing");
+            kanaSpacing = element.value;
+            break;
+        case 1:
+            element = document.getElementById("config-kana-size");
+            kanaSize = element.value;
+            break;
+        case 2:
+            element = document.getElementById("config-romaji-size");
+            romajiSize = element.value;
+            break;
+        case 3:
+            element = document.getElementById("config-romaji-height");
+            romajiHeight = element.value;
+            break;
+    }
+}
+
+function revertConfig(index) {
+    let element;
+    switch(index) {
+        case 0:
+            element = document.getElementById("config-kana-spacing");
+            element.value = defaultKanaSpacing;
+            kanaSpacing = defaultKanaSpacing;
+            break;
+        case 1:
+            element = document.getElementById("config-kana-size");
+            element.value = defaultKanaSize;
+            kanaSize = defaultKanaSize;
+            break;
+        case 2:
+            element = document.getElementById("config-romaji-size");
+            element.value = defaultRomajiSize;
+            romajiSize = defaultRomajiSize;
+            break;
+        case 3:
+            element = document.getElementById("config-romaji-height");
+            element.value = defaultRomajiHeight;
+            romajiSpacing = defaultRomajiHeight;
+            break;
+    }
+}
+
+
 function getWordWidth (word) {
     let len = 0;
     for(let i = 0; i < word.length; i++) {
@@ -63,12 +131,7 @@ function generateLyricString() {
     let romajiIndex = 0;
     let returnString = "@<line-height=0em><align=left>";
 
-    let availableSpace = 15;
-
-    let kanaSpacing = 1.2;
     let initialPos = (availableSpace - kanaSpacing * japaneseString.length) / 2 + kanaSpacing / 2;
-    let kanaSize = 1;
-    let romajiSize = 0.6;
     // console.log(`initialPos ${initialPos}`);
 
     // console.log(romajiArray);
@@ -97,7 +160,7 @@ function generateLyricString() {
         for(let j = 0; j < wordLength; j++) {
             let syllableWidth = getWordWidth(romajiArray[i+j]) / 2.5;
             // console.log(`Width ${syllableWidth}`);
-            appendToPreview(leftPos+accumulatedOffset, 0, romajiSize, romajiArray[i+j]);
+            // appendToPreview(leftPos+accumulatedOffset, 0, romajiSize, romajiArray[i+j]);
 
             romajiPositions.push(leftPos + accumulatedOffset);
             accumulatedOffset += syllableWidth;
@@ -125,13 +188,13 @@ function generateLyricString() {
         let romajiPos = romajiPositions[i];
         romajiPos = Math.round(romajiPos * 100) / 100;
 
-        appendToPreview(kanaPos, 0.5, kanaSize, japaneseString[i]);
+        appendToPreview(kanaPos, (romajiHeight - romajiSize), kanaSize, japaneseString[i]);
 
         appendToPreview(romajiPos, 0, romajiSize, romajiArray[romajiIndex]);
 
         returnString += `<pos=${kanaPos}em><size=${kanaSize}em>`
                 + japaneseString[i]
-                + `<pos=${romajiPos}em><voffset=1em><size=${romajiSize}em>`
+                + `<pos=${romajiPos}em><voffset=${romajiHeight}em><size=${romajiSize}em>`
                 + romajiArray[romajiIndex++]
                 + `</voffset></size>\n`;
     }

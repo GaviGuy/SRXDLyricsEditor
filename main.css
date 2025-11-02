@@ -38,3 +38,10 @@ body {
     flex-direction: column;
     gap: 2rem;
 }
+
+.lyrics-container {
+    position: absolute;
+    margin-top: 2rem;
+    gap: 4rem;
+    padding: 4rem;
+}
