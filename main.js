@@ -205,6 +205,7 @@ function generateLyricString() {
 
 
     //assemble final string
+    let tooShort = 0;
     for(let i = 0; i < japaneseString.length; i++) {
         if(romajiArray[romajiIndex] == "|") romajiIndex++;
 
@@ -214,7 +215,7 @@ function generateLyricString() {
         let h = Math.round(romajiHeight);
 
         if(romajiIndex >= romajiArray.length) {
-            alert("Romaji array is shorter than kana array. Double check your inputs.");
+            tooShort++;
             romajiArray.push("Undefined");
             romajiPos = 0;
         }
@@ -227,9 +228,18 @@ function generateLyricString() {
 
         romajiIndex++;
     }
-    if(romajiIndex < romajiArray.length) {
-        alert("Romaji array is longer than kana array. Double check your inputs.");
+    //report erronous input
+    if(tooShort)
+        alert(`Missing ${tooShort} romaji word${tooShort > 1 ? 's' : ''}. Double check your inputs.`);
+    let tooMany = (romajiArray.length - romajiIndex)
+    if(tooMany > 0) {
+        tooMany = 0;
+        for(let i = romajiIndex; i < romajiArray.length; i++) {
+            if(romajiArray[i] != '|' && romajiArray[i].trim() != '') tooMany++;
+        }
+        if(tooMany > 0) alert(`Found ${tooMany} extra romaji word${tooMany > 1 ? 's' : ''}. Double check your inputs.`);
     }
+
     navigator.clipboard.writeText(returnString);
     console.log(returnString);
 }
