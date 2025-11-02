@@ -72,6 +72,10 @@ function revertConfig(index) {
 function getWordWidth (word) {
     let len = 0;
     for(let i = 0; i < word.length; i++) {
+        if(word[i] >= 'ぁ' && word[i] <= 'ゟ' || word[i] >= 'ァ' && word[i] <= 'ヿ') {
+            len += 1.5
+            continue;
+        }
         switch (word[i]) {
             case '*':
                 break;
@@ -218,8 +222,10 @@ function generateLyricString() {
         let romajiString = "";
         if(romajiArray[romajiIndex] != '*')
             romajiString = `<size=${romajiSize}><pos=${romajiPos}><voffset=${h}>`
-                + romajiArray[romajiIndex++] + `</voffset> `;
+                + romajiArray[romajiIndex] + `</voffset> `;
         returnString += kanaString + romajiString + ' ';
+
+        romajiIndex++;
     }
     if(romajiIndex < romajiArray.length) {
         alert("Romaji array is longer than kana array. Double check your inputs.");
