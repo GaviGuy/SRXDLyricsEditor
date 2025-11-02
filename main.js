@@ -137,16 +137,16 @@ function generatePreview() {
     let initialPos = (canvasWidth - kanaSpacing * (japaneseString.length - 1)) / 2 - kanaSize / 2;
     let romajiPositions = calculateRomajiPositions(romajiArray, initialPos);
 
-    let romajiH = -romajiSize * 1.75;
-    let kanaH = 1 * romajiHeight - 1.75 * kanaSize;
+    let romajiH = (romajiSize * -1.75);
+    let kanaH = 1 * romajiH + 1 * romajiHeight - 1.75 * (kanaSize - romajiSize);
     
     clearPreview();
 
     let skips = 0;
     for(let i = 0; i < japaneseString.length; i++) {
-        if(romajiArray[i+skips] == "|") skips++;
-        appendToPreview(initialPos + kanaSpacing * i, kanaH + 20, kanaSize, japaneseString[i]);
-        appendToPreview(romajiPositions[i], romajiH + 20, romajiSize, romajiArray[i + skips]);
+        while(romajiArray[i+skips] == "|") skips++;
+        appendToPreview(initialPos + kanaSpacing * i, kanaH + 40, kanaSize, japaneseString[i]);
+        appendToPreview(romajiPositions[i], romajiH + 40, romajiSize, romajiArray[i + skips]);
     }
 
 }
@@ -165,7 +165,7 @@ function calculateRomajiPositions(romajiArray, initialPos) {
             word += romajiArray[i+j];
         }
         let wordWidth = getWordWidth(word) * romajiSize;
-        let centerPos = initialPos + (kanaSpacing * (i + (wordLength / 2) - numSplit)) - (kanaSpacing - kanaSize) / 2;
+        let centerPos = initialPos + 0.5 * kanaSize + (kanaSpacing * (i + ((wordLength - 1) / 2) - numSplit)) ;
         let leftPos = centerPos - (wordWidth / 2)
         let accumulatedOffset = 0;
 
