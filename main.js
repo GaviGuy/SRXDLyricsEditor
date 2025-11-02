@@ -1,8 +1,11 @@
-const availableSpace = 15;
-const defaultKanaSpacing = 1.2;
-const defaultKanaSize = 1;
-const defaultRomajiSize = 0.6;
-const defaultRomajiHeight = 1;
+const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+
+const canvasWidth = 160;
+
+const defaultKanaSpacing = 12;
+const defaultKanaSize = 12;
+const defaultRomajiSize = 8;
+const defaultRomajiHeight = 15;
 
 let kanaSpacing = 1.2;
 let kanaSize = 1;
@@ -37,6 +40,7 @@ function readParameters (index) {
             romajiHeight = element.value;
             break;
     }
+    generatePreview();
 }
 
 function revertConfig(index) {
@@ -61,9 +65,9 @@ function revertConfig(index) {
             element = document.getElementById("config-romaji-height");
             element.value = defaultRomajiHeight;
             romajiHeight = defaultRomajiHeight;
-            console.log(romajiHeight);
             break;
     }
+    generatePreview();
 }
 
 
@@ -75,7 +79,7 @@ function getWordWidth (word) {
             case 'l':
             case '1':
             case 'I':
-                len += 0.5;
+                len += 0.55;
                 break;
             case 'j':
             case 'r':
@@ -86,19 +90,19 @@ function getWordWidth (word) {
             case 'M':
             case 'w':
             case 'W':
-                len += 1.5;
+                len += 1.4;
                 break;
             default:
                 len += 1;
         }
     }
-    return len;
+    return len / 1.5;
 }
 
 function appendToPreview(posX, posY, size, text) {
     let parentElement = document.getElementById("lyrics-preview");
     let newElement = parentElement.appendChild(document.createElement("p"));
-    newElement.style = `font-weight: bold; position: absolute; left: ${posX}rem; top: ${posY}rem; font-size:${size}rem`;
+    newElement.style = `font-weight: bold; position: absolute; left: ${posX}px; top: ${posY}px; font-size:${size}px`;
     newElement.textContent = text;
 }
 
@@ -123,21 +127,28 @@ function generateRomaji() {
 
 }
 
-function generateLyricString() {
+function generatePreview() {
     let japaneseString = document.getElementById("input-japanese").value;
 
     let romajiString = document.getElementById("input-romaji").value;
     romajiString = romajiString.replaceAll("|", " | ").replace(/\s+/g, ' ');
     let romajiArray = romajiString.split(" ");
-    let romajiIndex = 0;
-    let returnString = "@<line-height=0em><align=left>";
 
-    let initialPos = (availableSpace - kanaSpacing * japaneseString.length) / 2 + kanaSpacing / 2;
-    // console.log(`initialPos ${initialPos}`);
+    let initialPos = (canvasWidth - kanaSpacing * (japaneseString.length - 1)) / 2 - kanaSize / 2;
+    let romajiPositions = calculateRomajiPositions(romajiArray, initialPos);
+    
+    clearPreview();
 
-    // console.log(romajiArray);
+    let skips = 0;
+    for(let i = 0; i < japaneseString.length; i++) {
+        if(romajiArray[i+skips] == "|") skips++;
+        appendToPreview(initialPos + kanaSpacing * i, romajiHeight, kanaSize, japaneseString[i]);
+        appendToPreview(romajiPositions[i], 0, romajiSize, romajiArray[i + skips]);
+    }
 
-    //figure out romaji horizontal positions
+}
+
+function calculateRomajiPositions(romajiArray, initialPos) {
     let wordLength = 1;
     let numSplit = 0;
     let romajiPositions = [];
@@ -150,60 +161,60 @@ function generateLyricString() {
         for (let j = 0; j < wordLength; j++) {
             word += romajiArray[i+j];
         }
-        let wordWidth = getWordWidth(word) / 2.5;
-        // console.log(`Width of ${word}: ${wordWidth}`);
-        // console.log(`Length of ${word}: ${wordLength}`);
-        let centerPos = initialPos + kanaSpacing * (i + (wordLength / 2) - numSplit) - (kanaSpacing - kanaSize) / 2;
+        let wordWidth = getWordWidth(word) * romajiSize;
+        let centerPos = initialPos + (kanaSpacing * (i + (wordLength / 2) - numSplit)) - (kanaSpacing - kanaSize) / 2;
         let leftPos = centerPos - (wordWidth / 2)
-        // console.log(`leftPos ${leftPos}`);
         let accumulatedOffset = 0;
 
         for(let j = 0; j < wordLength; j++) {
-            let syllableWidth = getWordWidth(romajiArray[i+j]) / 2.5;
-            // console.log(`Width ${syllableWidth}`);
-            // appendToPreview(leftPos+accumulatedOffset, 0, romajiSize, romajiArray[i+j]);
+            let syllableWidth = getWordWidth(romajiArray[i+j]) * romajiSize;
 
             romajiPositions.push(leftPos + accumulatedOffset);
             accumulatedOffset += syllableWidth;
         }
-
-        // console.log(wordLength);
-        
-
         numSplit++;
         if(numSplit > 50) {
             console.error("infinite loop");
             break;
         }
     }
+    return romajiPositions;
+}
+
+function generateLyricString() {
+    generatePreview();
+    let japaneseString = document.getElementById("input-japanese").value;
+
+    let romajiString = document.getElementById("input-romaji").value;
+    romajiString = romajiString.replaceAll("|", " | ").replace(/\s+/g, ' ');
+    let romajiArray = romajiString.split(" ");
+    let romajiIndex = 0;
+    let returnString = "@<line-height=0em><align=left>";
+
+    let initialPos = (canvasWidth - kanaSpacing * (japaneseString.length - 1)) / 2 - kanaSize / 2;
+    let romajiPositions = calculateRomajiPositions(romajiArray, initialPos);
+    
 
 
     //assemble final string
-    clearPreview();
     for(let i = 0; i < japaneseString.length; i++) {
         if(romajiArray[romajiIndex] == "|") romajiIndex++;
 
         //truncate float numbers
-        let kanaPos = initialPos + kanaSpacing * i;
-        kanaPos = Math.round(kanaPos * 100) / 100;
-        let romajiPos = romajiPositions[i];
-        romajiPos = Math.round(romajiPos * 100) / 100;
+        let kanaPos = Math.round(initialPos + kanaSpacing * i);
+        let romajiPos = Math.round(romajiPositions[i]);
+        let h = Math.round(romajiHeight);
 
         if(romajiIndex >= romajiArray.length) {
             alert("Romaji array is shorter than kana array. Double check your inputs.");
             romajiArray.push("Undefined");
             romajiPos = 0;
         }
-
-        appendToPreview(kanaPos, (romajiHeight - romajiSize), kanaSize, japaneseString[i]);
-
-        appendToPreview(romajiPos, 0, romajiSize, romajiArray[romajiIndex]);
-
-        returnString += `<pos=${kanaPos}em><size=${kanaSize}em>`
+        returnString += `<size=${kanaSize}><pos=${kanaPos}>`
                 + japaneseString[i]
-                + `<pos=${romajiPos}em><voffset=${romajiHeight}em><size=${romajiSize}em>`
+                + `<size=${romajiSize}><pos=${romajiPos}><voffset=${h}>`
                 + romajiArray[romajiIndex++]
-                + `</voffset></size>\n`;
+                + `</voffset> `;
     }
     if(romajiIndex < romajiArray.length) {
         alert("Romaji array is longer than kana array. Double check your inputs.");

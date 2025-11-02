@@ -42,8 +42,9 @@ body {
 .lyrics-container {
     position: absolute;
     margin-top: 2rem;
-    gap: 4rem;
-    padding: 4rem;
-    width:8.5rem;
+    gap: 0rem;
+    padding: 0rem;
+    height:80px;
+    width:160px;
     background-color: #110911;
 }

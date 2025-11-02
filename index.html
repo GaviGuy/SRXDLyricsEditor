@@ -20,7 +20,7 @@
             <div>
                 Input a single line of Japanese lyrics here.<br>
 
-                <textarea id="input-japanese" rows=2 cols=80></textarea>
+                <textarea onchange="readParameters(-1)" id="input-japanese" rows=2 cols=80></textarea>
                 <br>
                 <button disabled=true onclick="generateRomaji()">Generate Romaji (unfinished)</button>
             </div>
@@ -28,7 +28,7 @@
                 Romaji goes here. Check for accuracy, pacing, etc.<br>
                 A space indicates the start of a new kana.<br>
                 A | (pipe symbol) indicates the start of a new word.<br>
-                <textarea id="input-romaji" rows=2 cols=80></textarea>
+                <textarea onchange="readParameters(-1)" id="input-romaji" rows=2 cols=80></textarea>
                 <br>
                 <button onclick="generateLyricString()">Copy Output to Clipboard</button>
             </div>
@@ -38,23 +38,23 @@
         <div class="column-right">
             <div id="config">
                 <div>
-                    <input onchange="readParameters(0)" type="number" value="1.2" title="Kana spacing"
-                            id="config-kana-spacing">Horizontal kana spacing</input>
+                    <input onchange="readParameters(0)" type="number" value="15" title="Kana spacing"
+                            step=1 id="config-kana-spacing">Horizontal kana spacing</input>
                     <button onClick="revertConfig(0)">default</button>
                 </div>
                 <div>
-                    <input onchange="readParameters(1)" type="number" value="1.0" title="Kana size"
-                            id="config-kana-size">Kana size</input>
+                    <input onchange="readParameters(1)" type="number" value="12" title="Kana size"
+                            step=1 id="config-kana-size">Kana size</input>
                     <button onClick="revertConfig(1)">default</button>
                 </div>
                 <div>
-                    <input onchange="readParameters(2)" type="number" value="0.6" title="Romaji size"
-                            id="config-romaji-size">Romaji size</input>
+                    <input onchange="readParameters(2)" type="number" value="8" title="Romaji size"
+                            step=1 id="config-romaji-size">Romaji size</input>
                     <button onClick="revertConfig(2)">default</button>
                 </div>
                 <div>
-                    <input onchange="readParameters(3)" type="number" value="1" title="Romaji height"
-                            id="config-romaji-height">Romaji height</input>
+                    <input onchange="readParameters(3)" type="number" value="15" title="Romaji height"
+                            step=1 id="config-romaji-height">Romaji height</input>
                     <button onClick="revertConfig(3)">default</button>
                 </div>
             </div>
