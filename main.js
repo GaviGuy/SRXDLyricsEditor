@@ -60,7 +60,8 @@ function revertConfig(index) {
         case 3:
             element = document.getElementById("config-romaji-height");
             element.value = defaultRomajiHeight;
-            romajiSpacing = defaultRomajiHeight;
+            romajiHeight = defaultRomajiHeight;
+            console.log(romajiHeight);
             break;
     }
 }
@@ -188,6 +189,12 @@ function generateLyricString() {
         let romajiPos = romajiPositions[i];
         romajiPos = Math.round(romajiPos * 100) / 100;
 
+        if(romajiIndex >= romajiArray.length) {
+            alert("Romaji array is shorter than kana array. Double check your inputs.");
+            romajiArray.push("Undefined");
+            romajiPos = 0;
+        }
+
         appendToPreview(kanaPos, (romajiHeight - romajiSize), kanaSize, japaneseString[i]);
 
         appendToPreview(romajiPos, 0, romajiSize, romajiArray[romajiIndex]);
@@ -197,6 +204,9 @@ function generateLyricString() {
                 + `<pos=${romajiPos}em><voffset=${romajiHeight}em><size=${romajiSize}em>`
                 + romajiArray[romajiIndex++]
                 + `</voffset></size>\n`;
+    }
+    if(romajiIndex < romajiArray.length) {
+        alert("Romaji array is longer than kana array. Double check your inputs.");
     }
     navigator.clipboard.writeText(returnString);
     console.log(returnString);
