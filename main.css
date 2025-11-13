@@ -42,10 +42,20 @@ body {
 .lyrics-container {
     position: absolute;
     pointer-events: none;
+    font-weight: 800;
     margin-top: 2rem;
     gap: 0rem;
     padding: 0rem;
     height:160px;
     width:320px;
     background-color: #110911;
+}
+
+.widther {
+    position: absolute;
+    visibility: hidden;
+    height: auto;
+    width: auto;
+    font-weight: 800;
+    white-space: nowrap;
 }

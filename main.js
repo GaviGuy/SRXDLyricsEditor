@@ -68,45 +68,51 @@ function revertConfig(index) {
     generatePreview();
 }
 
-
-function getWordWidth (word) {
-    let len = 0;
-    for(let i = 0; i < word.length; i++) {
-        if(word[i] >= 'ぁ' && word[i] <= 'ゟ' || word[i] >= 'ァ' && word[i] <= 'ヿ') {
-            len += 1.5
-            continue;
-        }
-        switch (word[i]) {
-            case '*':
-                break;
-            case 'i':
-            case 'l':
-            case '1':
-            case 'I':
-                len += 0.55;
-                break;
-            case 'j':
-            case 'r':
-            case 't':
-                len += 0.75;
-                break;
-            case 'm':
-            case 'M':
-            case 'w':
-            case 'W':
-                len += 1.4;
-                break;
-            default:
-                len += 1;
-        }
-    }
-    return len / 1.5;
+function getWordWidth2 (word, fontSize) {
+    let elem = document.getElementById("widther");
+    elem.textContent = word;
+    elem.style.fontSize = fontSize;
+    return elem.clientWidth / 2;
 }
+
+// function getWordWidth (word) {
+//     let len = 0;
+//     for(let i = 0; i < word.length; i++) {
+//         if(word[i] >= 'ぁ' && word[i] <= 'ゟ' || word[i] >= 'ァ' && word[i] <= 'ヿ') {
+//             len += 1.5
+//             continue;
+//         }
+//         switch (word[i]) {
+//             case '*':
+//                 break;
+//             case 'i':
+//             case 'l':
+//             case '1':
+//             case 'I':
+//                 len += 0.55;
+//                 break;
+//             case 'j':
+//             case 'r':
+//             case 't':
+//                 len += 0.75;
+//                 break;
+//             case 'm':
+//             case 'M':
+//             case 'w':
+//             case 'W':
+//                 len += 1.4;
+//                 break;
+//             default:
+//                 len += 1;
+//         }
+//     }
+//     return len / 1.5;
+// }
 
 function appendToPreview(posX, posY, size, text) {
     let parentElement = document.getElementById("lyrics-preview");
     let newElement = parentElement.appendChild(document.createElement("p"));
-    newElement.style = `font-weight: bold; position: absolute; left: ${2* posX}px; top: ${2* posY}px; font-size:${2* size}px`;
+    newElement.style = `font-weight: 800; position: absolute; left: ${2* posX}px; top: ${2* posY}px; font-size:${2* size}px`;
     newElement.textContent = text;
 }
 
@@ -169,13 +175,13 @@ function calculateRomajiPositions(romajiArray, initialPos) {
         for (let j = 0; j < wordLength; j++) {
             word += romajiArray[i+j];
         }
-        let wordWidth = getWordWidth(word) * romajiSize;
+        let wordWidth = getWordWidth2(word, romajiSize);
         let centerPos = initialPos + 0.5 * kanaSize + (kanaSpacing * (i + ((wordLength - 1) / 2) - numSplit)) ;
         let leftPos = centerPos - (wordWidth / 2)
         let accumulatedOffset = 0;
 
         for(let j = 0; j < wordLength; j++) {
-            let syllableWidth = getWordWidth(romajiArray[i+j]) * romajiSize;
+            let syllableWidth = getWordWidth2(romajiArray[i+j], romajiSize);
 
             romajiPositions.push(leftPos + accumulatedOffset);
             accumulatedOffset += syllableWidth;
