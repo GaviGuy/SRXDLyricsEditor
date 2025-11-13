@@ -163,11 +163,14 @@ function generatePreview() {
 }
 
 function calculateRomajiPositions(romajiArray, initialPos) {
+    let mode = document.getElementById("config-romaji-mode");
+    mode = mode.checked;
     let wordLength = 1;
     let numSplit = 0;
     let romajiPositions = [];
     for(let i = 0; i < romajiArray.length; i += wordLength + 1) {
-        let nextSplit = romajiArray.indexOf("|", i);
+        let nextSplit = romajiArray.length;
+        if(!mode) nextSplit = romajiArray.indexOf("|", i);
         if(nextSplit < 0) nextSplit = romajiArray.length;
 
         wordLength = nextSplit - i;
@@ -177,13 +180,15 @@ function calculateRomajiPositions(romajiArray, initialPos) {
         }
         let wordWidth = getWordWidth2(word, romajiSize);
         let centerPos = initialPos + 0.5 * kanaSize + (kanaSpacing * (i + ((wordLength - 1) / 2) - numSplit)) ;
+        if(mode) centerPos = 80;
         let leftPos = centerPos - (wordWidth / 2)
         let accumulatedOffset = 0;
 
         for(let j = 0; j < wordLength; j++) {
             let syllableWidth = getWordWidth2(romajiArray[i+j], romajiSize);
-
-            romajiPositions.push(leftPos + accumulatedOffset);
+            
+            if(romajiArray[i+j] != '|')
+                romajiPositions.push(leftPos + accumulatedOffset);
             accumulatedOffset += syllableWidth;
         }
         numSplit++;

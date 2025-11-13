@@ -21,7 +21,8 @@
             <div>
                 Input a single line of Japanese lyrics here.<br>
 
-                <textarea onchange="readParameters(-1)" id="input-japanese" rows=2 cols=80></textarea>
+                <textarea onchange="readParameters(-1)" id="input-japanese" rows=2 cols=80
+                        title="Kana input field"></textarea>
                 <br>
                 <button disabled=true onclick="generateRomaji()">Generate Romaji (unfinished)</button>
                 <button disabled=true onclick="generateFurigana()">Generate Furigana (unfinished)</button>
@@ -31,9 +32,11 @@
                 A space indicates the start of a new kana.<br>
                 A | (pipe symbol) indicates the start of a new word.<br>
                 An * (asterisk) indicates a spot where no pronounciation should go.<br>
-                <textarea onchange="readParameters(-1)" id="input-romaji" rows=2 cols=80></textarea>
+                <textarea onchange="readParameters(-1)" id="input-romaji" rows=2 cols=80
+                        title="Pronounciation input field"></textarea>
                 <br>
-                <button onclick="generateLyricString()">Copy Output to Clipboard</button>
+                <button onclick="generateLyricString()"
+                        title="Copy a string that can be used in the SRXD lyrics editor">Copy Output to Clipboard</button>
             </div>
             <div>
                 As an example, the first Japanese line from Lovesick.</br>
@@ -53,24 +56,28 @@
         <div class="column-right">
             <div id="config">
                 <div>
-                    <input onchange="readParameters(0)" type="number" value="12" title="Kana spacing"
+                    <input onchange="readParameters(0)" type="number" value="12" title="Spacing between the start of each kana"
                             step=1 id="config-kana-spacing">Horizontal kana spacing</input>
                     <button onClick="revertConfig(0)">default</button>
                 </div>
                 <div>
-                    <input onchange="readParameters(1)" type="number" value="12" title="Kana size"
+                    <input onchange="readParameters(1)" type="number" value="12" title="Font size of the kana line"
                             step=1 id="config-kana-size">Kana size</input>
                     <button onClick="revertConfig(1)">default</button>
                 </div>
                 <div>
-                    <input onchange="readParameters(2)" type="number" value="8" title="Romaji size"
+                    <input onchange="readParameters(2)" type="number" value="8" title="Font size of the romaji line"
                             step=1 id="config-romaji-size">Romaji size</input>
                     <button onClick="revertConfig(2)">default</button>
                 </div>
                 <div>
-                    <input onchange="readParameters(3)" type="number" value="15" title="Romaji height"
+                    <input onchange="readParameters(3)" type="number" value="15" title="Vertical space between the kana and romaji lines"
                             step=1 id="config-romaji-height">Romaji height</input>
                     <button onClick="revertConfig(3)">default</button>
+                </div>
+                <div style="margin-left:145px">
+                    <input onchange="readParameters(4)" type="checkbox" value = false title="Render the romaji normally spaced instead of near their source kana"
+                            id="config-romaji-mode">Centered romaji mode</input>
                 </div>
             </div>
             
