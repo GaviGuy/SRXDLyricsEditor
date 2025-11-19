@@ -12,8 +12,6 @@ let xPositions2 = [];
 async function init() {
     readParameters(0);
     readParameters(1);
-    readParameters(2);
-    readParameters(3);
 }
 init();
 
