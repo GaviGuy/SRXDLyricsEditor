@@ -136,10 +136,10 @@ function generatePreview () {
     //     a = [];
     // let ind = 0;
 
-    for(let i = 0; i < syllables1.length; i++) {
-        for(let j = 0; j < syllables1[i].length; j++) {
-            if(syllables1[i]) {
-                appendToPreview(previewElement, xPositions[i][j], yPositions[i][j], textSize, syllables1[i][j], alphas[0]);
+    for(let i = 0; i < syllables.length; i++) {
+        for(let j = 0; j < syllables[i].length; j++) {
+            if(syllables[i]) {
+                appendToPreview(previewElement, xPositions[i][j], yPositions[i][j], textSize, syllables[i][j], alphas[0]);
                 // x[ind] = Math.round(xPositions[i][j]);
                 // y[ind] = Math.round(yPositions[i][j]);
                 // s[ind] = Number(textSize);
@@ -161,16 +161,16 @@ function generateLyricString() {
     let stillHasWords = true;
     let sylInd = 0;
     let retString = `@<size=${textSize}><align=left><line-height=0><alpha=#` + Number(alphas[0]).toString(16) + '>';
-    console.log(syllables1);
+    console.log(syllables);
     while(stillHasWords) {
         stillHasWords = false;
-        for(let i = 0; i < syllables1.length; i++) {
-            if(syllables1[i] && sylInd < syllables1[i].length) {
+        for(let i = 0; i < syllables.length; i++) {
+            if(syllables[i] && sylInd < syllables[i].length) {
                 let xPos = Math.round(xPositions[i][sylInd]);
                 let yPos = -1 * Math.round(yPositions[i][sylInd])
                 retString += `<pos=${xPos}>`
                         + `<voffset=${yPos}>`
-                        + syllables1[i][sylInd].trim();
+                        + syllables[i][sylInd].trim();
                 if(mode) retString += ' ';
                 stillHasWords = true;
             }
@@ -184,7 +184,7 @@ function generateLyricString() {
 
 function buildStrings() {
     let rando = Math.seed(seed);
-    syllables1 = [];
+    syllables = [];
     xPositions = [];
     yPositions = [];
 
@@ -205,7 +205,7 @@ function buildStrings() {
         }
 
         for(let i = Number(prevP); i < Number(counts[pInd]) + Number(prevP); i++) { //repeat for each count in phrase
-            syllables1[i] = [];
+            syllables[i] = [];
             xPositions[i] = [];
             yPositions[i] = [];
 
@@ -225,7 +225,7 @@ function buildStrings() {
 
                 let newSyl = syl[j + numNewlines]
 
-                syllables1[i][j] = trimSyllable(newSyl);
+                syllables[i][j] = trimSyllable(newSyl);
                 xPositions[i][j] = startPos[numNewlines] + accumulatedOffset + Math.cos(randoAngle) * randoDistance * maxX;
                 yPositions[i][j] = yPos + Math.sin(randoAngle) * randoDistance * maxY;
                 
