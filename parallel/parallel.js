@@ -1,8 +1,8 @@
 const defaultTextSize = 10;
 const defaultVerticalGap = 12;
 
-let textSize = 10;
-let verticalGap = 12;
+let textSize = defaultTextSize;
+let verticalGap = defaultVerticalGap;
 
 let syllables1 = [];
 let syllables2 = [];

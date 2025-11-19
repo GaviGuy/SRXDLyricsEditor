@@ -5,10 +5,10 @@ const defaultKanaSize = 12;
 const defaultRomajiSize = 8;
 const defaultRomajiHeight = 15;
 
-let kanaSpacing = 12;
-let kanaSize = 12;
-let romajiSize = 8;
-let romajiHeight = 15;
+let kanaSpacing = defaultKanaSpacing;
+let kanaSize = defaultKanaSize;
+let romajiSize = defaultRomajiSize;
+let romajiHeight = defaultRomajiHeight;
 
 async function init() {
     readParameters(0);
