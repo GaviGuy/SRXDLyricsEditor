@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A web-based application for creating and previewing lyrics for Spin Rhythm XD">
+    <title>SRXD Lyrics Editor</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="mirage.css">
+    <script defer type="text/javascript" src="../main.js"></script>
+    <script defer type="text/javascript" src="mirage.js"></script>
+
+</head>
+<body>
+    <div class="main">
+        <div class="column-left">
+            <div>
+                Source text (single phrase)
+                <div id="source-container">
+                    <div class="phrase">
+                        <textarea onchange="generatePreview()" cols=80
+                                title="Lyric phrase to display" class="phrase-input"></textarea><br>
+                        <input onchange="generatePreview()" value=2 type="number"
+                                title="Number of times to display the phrase" class="count-input">Count</input>
+                        <input onchange="generatePreview()" value=128 type="number"
+                                title="Opacity of this phrase" class="alpha-input">Opacity</input>
+                    </div>
+                </div>
+                <div class="util-container">
+                    <button onclick="addSourceContainer()"
+                            title="Add another unique phrase to the mirage">Add another phrase</button>
+                    <br><br>
+                    <button onclick="rerollSeed()"
+                            title="Reroll the random seed and reposition the mirage output">Reroll RNG</button>
+                    <button onclick="generateLyricString()"
+                            title="Copy output string to clipboard, for use in SRXD">Copy to Clipboard</button>
+                </div>
+            </div>
+            <div>
+                This tool creates mirage-like displays of text. To use it, input lines of text in lyric format<br>
+                (eg. spaces for new words, hyphen-spaces for new syllables)<br>
+                The second textbox specifies how many times the given text should appear in the mirage.<br>
+                The third textbox specifies the alpha value of given text.<br>
+                <br><br>
+                Todo:<br>
+                set up syllable input, counting, and checking between different phrase inputs<br>
+                manually position each syllable (to allow timed execution)<br>
+                save positions so multi-syllablic words aren't split<br>
+                improve preview with outlines, solve low alpha discrepencies
+                <br><br>
+                /n to force a newline<br>
+                [space] for a new word<br>
+                -[space] for a new syllable<br>
+                =[space] for -[space]
+            </div>
+        </div>
+        <div class="column-right">
+            <div id="config">
+                <div>
+                    <input onchange="readParameters(0)" type="number" value="8" title=""
+                            step=1 id="config-max-x">Max X displacement</input>
+                    <button onClick="revertConfig(0)">default</button>
+                </div>
+                <div>
+                    <input onchange="readParameters(1)" type="number" value="8" title=""
+                            step=1 id="config-max-y">Max Y displacement</input>
+                    <button onClick="revertConfig(1)">default</button>
+                </div>
+                <div>
+                    <input onchange="readParameters(2)" type="number" value="12" title=""
+                            step=1 id="config-text-size">Text size</input>
+                    <button onClick="revertConfig(2)">default</button>
+                </div>
+                <div style="margin-left:145px">
+                    <input onchange="readParameters(3)" type="checkbox" value = false title=""
+                            id="config-gradual-mode">Gradual syllable mode</input>
+                </div>
+            </div>
+            
+            <div>
+                <br>
+                Preview:
+                <div class="widther" id="widther"></div>
+                <div class="preview-container">
+                    <div id="preview"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <button onclick="document.location='..'">Back to index</button>
+    </div>
+</body>
+</html>

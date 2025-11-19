@@ -1,0 +1,31 @@
+.index-chapter {
+    display: flex;
+    flex-flow: row wrap;
+    font-size: 2rem;
+    margin: 2rem;
+    padding: 2rem;
+    background-color: #331A33;
+    max-width: 700px;
+}
+
+.chapter-root {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.chapter-left {
+    max-width: 320px;
+    padding: 1rem;
+}
+
+.chapter-label {
+    font-size: 2rem;
+    display:flex;
+    justify-self: center;
+}
+
+.chapter-description {
+    text-align: center;
+    font-size: 1rem;
+    margin-top: 1rem;
+}

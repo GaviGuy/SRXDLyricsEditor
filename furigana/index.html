@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A web-based application for creating and previewing lyrics for Spin Rhythm XD">
+    <title>SRXD Lyrics Editor</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    <script defer type="text/javascript" src="../main.js"></script>
+    <script defer type="text/javascript" src="furigana.js"></script>
+
+</head>
+<body>
+    <div class="main">
+        <div class="column-left">
+            <div>
+                Input a single line of Japanese lyrics here.<br>
+
+                <textarea onchange="readParameters(-1)" id="input-japanese" rows=2 cols=80
+                        title="Kana input field"></textarea>
+                <br>
+                <button disabled=true onclick="generateRomaji()">Generate Romaji (unfinished)</button>
+                <button disabled=true onclick="generateFurigana()">Generate Furigana (unfinished)</button>
+            </div>
+            <div>
+                Romaji goes here. Check for accuracy, pacing, etc.<br>
+                A space indicates the start of a new kana.<br>
+                A | (pipe symbol) indicates the start of a new word.<br>
+                An * (asterisk) indicates a spot where no pronounciation should go.<br>
+                <textarea onchange="readParameters(-1)" id="input-romaji" rows=2 cols=80
+                        title="Pronounciation input field"></textarea>
+                <br>
+                <button onclick="generateLyricString()"
+                        title="Copy a string that can be used in the SRXD lyrics editor">Copy Output to Clipboard</button>
+            </div>
+            <div>
+                As an example, the first Japanese line from Lovesick.</br>
+                I first put this line into the top box:<br>
+                <b>諦めましょうこの人生</b><br><br>
+                For the next box, I need to match <i>every</i> kana with a pronounciation.<br>
+                Here's the first step, romaji:<br>
+                <b>akiramemashou kono jinsei</b><br><br>
+                Next, to assist the program, I will put pipes between each word,<br>
+                and spaces between each kana's pronunciation:<br>
+                <b>akira me ma sh o u | ko no | jin sei</b><br><br>
+                Notice how the number of kana and the number of pronounced chunks match.<br><br>
+                With both boxes populated, I can click "Copy Output to Clipboard" and<br>
+                paste into the Spin Rhythm lyric editor.<br>
+            </div>
+        </div>
+        <div class="column-right">
+            <div id="config">
+                <div>
+                    <input onchange="readParameters(0)" type="number" value="12" title="Spacing between the start of each kana"
+                            step=1 id="config-kana-spacing">Horizontal kana spacing</input>
+                    <button onClick="revertConfig(0)">default</button>
+                </div>
+                <div>
+                    <input onchange="readParameters(1)" type="number" value="12" title="Font size of the kana line"
+                            step=1 id="config-kana-size">Kana size</input>
+                    <button onClick="revertConfig(1)">default</button>
+                </div>
+                <div>
+                    <input onchange="readParameters(2)" type="number" value="8" title="Font size of the romaji line"
+                            step=1 id="config-romaji-size">Romaji size</input>
+                    <button onClick="revertConfig(2)">default</button>
+                </div>
+                <div>
+                    <input onchange="readParameters(3)" type="number" value="15" title="Vertical space between the kana and romaji lines"
+                            step=1 id="config-romaji-height">Romaji height</input>
+                    <button onClick="revertConfig(3)">default</button>
+                </div>
+                <div style="margin-left:145px">
+                    <input onchange="readParameters(4)" type="checkbox" value = false title="Render the romaji normally spaced instead of near their source kana"
+                            id="config-romaji-mode">Centered romaji mode</input>
+                </div>
+            </div>
+            
+            <div>
+                <br>
+                Preview:
+                <div class="widther" id="widther"></div>
+                <div class="preview-container">
+                    <div id="preview"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <button onclick="document.location='..'">Back to index</button>
+    </div>
+</body>
+</html>
