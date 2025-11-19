@@ -46,13 +46,7 @@
                 This tool creates mirage-like displays of text. To use it, input lines of text in lyric format<br>
                 (eg. spaces for new words, hyphen-spaces for new syllables)<br>
                 The second textbox specifies how many times the given text should appear in the mirage.<br>
-                The third textbox specifies the alpha value of given text.<br>
-                <br><br>
-                Todo:<br>
-                set up syllable input, counting, and checking between different phrase inputs<br>
-                manually position each syllable (to allow timed execution)<br>
-                save positions so multi-syllablic words aren't split<br>
-                improve preview with outlines, solve low alpha discrepencies
+                The third textbox specifies the alpha value of given text (currently not working).<br>
                 <br><br>
                 /n to force a newline<br>
                 [space] for a new word<br>
@@ -63,22 +57,22 @@
         <div class="column-right">
             <div id="config">
                 <div>
-                    <input onchange="readParameters(0)" type="number" value="8" title=""
+                    <input onchange="readParameters(0)" type="number" value="8" title="Max horizontal distance to move each word"
                             step=1 id="config-max-x">Max X displacement</input>
                     <button onClick="revertConfig(0)">default</button>
                 </div>
                 <div>
-                    <input onchange="readParameters(1)" type="number" value="8" title=""
+                    <input onchange="readParameters(1)" type="number" value="8" title="Max vertical distance to move each word"
                             step=1 id="config-max-y">Max Y displacement</input>
                     <button onClick="revertConfig(1)">default</button>
                 </div>
                 <div>
-                    <input onchange="readParameters(2)" type="number" value="12" title=""
+                    <input onchange="readParameters(2)" type="number" value="12" title="Font size of each word (in pixels)"
                             step=1 id="config-text-size">Text size</input>
                     <button onClick="revertConfig(2)">default</button>
                 </div>
                 <div style="margin-left:145px">
-                    <input onchange="readParameters(3)" type="checkbox" value = false title=""
+                    <input onchange="readParameters(3)" type="checkbox" value = false title="When checked, syllables are evented individually. When unchecked, syllables are evented in clusters."
                             id="config-gradual-mode">Gradual syllable mode</input>
                 </div>
             </div>
