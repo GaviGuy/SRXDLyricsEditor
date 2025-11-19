@@ -415,6 +415,47 @@ let mirageA = [
   60
 ];
 
+let parallelX = [
+  49,
+  45,
+  72,
+  68,
+  89,
+  93
+];
+let parallelY = [
+  -6,
+  6,
+  -6,
+  6,
+  -6,
+  6
+];
+let parallelS = [
+  10,
+  10,
+  10,
+  10,
+  10,
+  10
+];
+let parallelT = [
+  "Get ",
+  "Get ",
+  "mo",
+  "groo",
+  "ving ",
+  "ving "
+];
+let parallelA = [
+  255,
+  255,
+  255,
+  255,
+  255,
+  255
+];
+
 let previews = [
     {
         title: "Romaji and Furigana",
@@ -435,6 +476,16 @@ let previews = [
         s: mirageS,
         t: mirageT,
         a: mirageA
+    },
+    {
+        title: "Parallel",
+        link: "parallel",
+        description: "Render 2 different phrases in tandem, syllable by syllable. Useful for multiple lines spoken at once.",
+        x: parallelX,
+        y: parallelY,
+        s: parallelS,
+        t: parallelT,
+        a: parallelA
     }
 ]
 

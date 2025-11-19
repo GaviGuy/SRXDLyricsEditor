@@ -95,7 +95,8 @@ function generatePreview() {
     let romajiH = (romajiSize * -1.75);
     let kanaH = 1 * romajiH + 1 * romajiHeight - 1.75 * (kanaSize - romajiSize);
     
-    clearPreview();
+    let previewElement = document.getElementById("preview");
+    clearPreview(previewElement);
 
     let skips = 0;
     // let x = [],
@@ -104,7 +105,6 @@ function generatePreview() {
     //     t = [],
     //     a = [];
     // let ind = 0;
-    let previewElement = document.getElementById("preview");
     for(let i = 0; i < japaneseString.length; i++) {
         while(romajiArray[i+skips] == "|") skips++;
         appendToPreview(previewElement, initialPos + kanaSpacing * i, kanaH + 40, kanaSize, japaneseString[i]);

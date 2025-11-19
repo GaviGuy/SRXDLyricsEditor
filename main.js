@@ -17,10 +17,9 @@ function appendToPreview(previewElement, posX, posY, size, text, alpha) {
     newElement.textContent = text;
 }
 
-function clearPreview() {
-    let parentElement = document.getElementById("preview");
-    while(parentElement.hasChildNodes()) {
-        parentElement.removeChild(parentElement.firstChild);
+function clearPreview(previewElement) {
+    while(previewElement.hasChildNodes()) {
+        previewElement.removeChild(previewElement.firstChild);
     }
 }
 
