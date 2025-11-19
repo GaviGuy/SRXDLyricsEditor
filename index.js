@@ -450,7 +450,8 @@ function assemblePreview (previewElement) {
 
         let label = left.appendChild(document.createElement("button"));
         label.textContent = previews[i].title;
-        label.setAttribute("onclick", `document.location='/${previews[i].link}'`);
+        label.setAttribute("onclick", `document.location='${previews[i].link}'`);
+        // label.setAttribute("onclick", `console.log(document.location)`);
         label.classList.add("chapter-label");
 
         let description = left.appendChild(document.createElement("div"));
