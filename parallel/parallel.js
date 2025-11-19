@@ -95,7 +95,7 @@ function generatePreview() {
             xPositions1[ind] = Math.round(startX1 + aOffset1);
             aOffset1 += getWordWidth(syllables1[ind], textSize);
             if(syl1[ind][syl1[ind].length-1] != '-')
-                aOffset1 += textSize * 0.4;
+                aOffset1 += textSize * 0.3;
             appendToPreview(previewElement, xPositions1[ind], verticalGap / -2, textSize, syllables1[ind], 255);
             // x[buildInd] = Math.round(xPositions1[ind]);
             // y[buildInd] = Math.round(verticalGap / -2);
@@ -110,7 +110,7 @@ function generatePreview() {
             xPositions2[ind] = Math.round(startX2 + aOffset2);
             aOffset2 += getWordWidth(syllables2[ind], textSize);
             if(syl2[ind][syl2[ind].length-1] != '-')
-                aOffset2 += textSize * 0.4;
+                aOffset2 += textSize * 0.3;
             appendToPreview(previewElement, xPositions2[ind], verticalGap / 2, textSize, syllables2[ind], 255);
             // x[buildInd] = Math.round(xPositions2[ind]);
             // y[buildInd] = Math.round(verticalGap / 2);
