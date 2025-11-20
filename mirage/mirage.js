@@ -1,16 +1,13 @@
 let strings = [];
 let counts = [];
 let alphas = [];
-let seed = Math.random() * 4294967296;
+let seed = 0;
 
 let syllables = [];
 let xPositions = [];
 let yPositions = [];
-
-//todo: set up syllables, count them, keep them consistent between lines
-//todo: manual positioning of each WORD, not syllable
-//todo: 
-
+//2D arrays: array[phrase][syllable]
+//eg. array[0] and array[1] might both originate from the same input, if its count is 2
 
 const defaultMaxX = 5;
 const defaultMaxY = 5;
@@ -28,7 +25,7 @@ async function init() {
     readParameters(0);
     readParameters(1);
     readParameters(2);
-    readParameters(3);
+    revertConfig(3);
 }
 init();
 
@@ -37,17 +34,21 @@ function readParameters (index) {
     switch(index) {
         case 0:
             element = document.getElementById("config-max-x");
-            maxX = element.value;
+            maxX = Number(element.value);
             break;
         case 1:
             element = document.getElementById("config-max-y");
-            maxY = element.value;
+            maxY = Number(element.value);
             break;
         case 2:
             element = document.getElementById("config-text-size");
-            textSize = element.value;
+            textSize = Number(element.value);
             break;
         case 3:
+            element = document.getElementById("config-seed");
+            seed = Number(element.value);
+            break;
+        case 4:
             element = document.getElementById("config-gradual-mode");
             mode = element.checked;
             break;
@@ -72,6 +73,11 @@ function revertConfig(index) {
             element = document.getElementById("config-text-size");
             element.value = defaultTextSize;
             textSize = defaultTextSize;
+            break;
+        case 3:
+            element = document.getElementById("config-seed");
+            seed = Math.round(Math.random() * 4294967296);
+            element.value = seed;
             break;
     }
     generatePreview();
@@ -116,9 +122,9 @@ function readPhrases() {
             if(inputElems[i].children[j].classList.contains("phrase-input"))
                 strings[i] = inputElems[i].children[j].value;
             else if(inputElems[i].children[j].classList.contains("count-input"))
-                counts[i] = inputElems[i].children[j].value;
+                counts[i] = Number(inputElems[i].children[j].value);
             else if(inputElems[i].children[j].classList.contains("alpha-input"))
-                alphas[i] = inputElems[i].children[j].value; 
+                alphas[i] = Number(inputElems[i].children[j].value); 
         }
     }
 }
@@ -139,7 +145,7 @@ function generatePreview () {
     for(let i = 0; i < syllables.length; i++) {
         for(let j = 0; j < syllables[i].length; j++) {
             if(syllables[i]) {
-                appendToPreview(previewElement, xPositions[i][j], yPositions[i][j], textSize, syllables[i][j], alphas[0]);
+                appendToPreview(previewElement, xPositions[i][j], yPositions[i][j], textSize, syllables[i][j], getAlphaByIndex(i));
                 // x[ind] = Math.round(xPositions[i][j]);
                 // y[ind] = Math.round(yPositions[i][j]);
                 // s[ind] = Number(textSize);
@@ -156,18 +162,40 @@ function generatePreview () {
     // console.log(a);
 }
 
+function getAlphaByIndex (index) {
+    let count = 0;
+    while(count < counts.length) {
+        if(index < counts[count]) return alphas[count];
+        else {
+            index -= counts[count];
+            count++;
+        }
+    }
+    console.log("error");
+}
+
 function generateLyricString() {
     buildStrings();
     let stillHasWords = true;
     let sylInd = 0;
-    let retString = `@<size=${textSize}><align=left><line-height=0><alpha=#` + Number(alphas[0]).toString(16) + '>';
-    console.log(syllables);
+    let prevAlpha = alphas[0].toString(16);
+    let alphaExtra = "";
+    if(prevAlpha < 16) alphaExtra = '0';
+    let retString = `@<size=${textSize}><align=left><line-height=0><alpha=#${alphaExtra}${prevAlpha}>`;
     while(stillHasWords) {
         stillHasWords = false;
         for(let i = 0; i < syllables.length; i++) {
             if(syllables[i] && sylInd < syllables[i].length) {
                 let xPos = Math.round(xPositions[i][sylInd]);
                 let yPos = -1 * Math.round(yPositions[i][sylInd])
+
+                let alpha = getAlphaByIndex(i).toString(16);
+                if(alpha < 16) alphaExtra = '0';
+                else alphaExtra = "";
+
+                if(alpha != prevAlpha) retString += `<alpha=#${alphaExtra}${alpha}>`;
+                prevAlpha = alpha;
+
                 retString += `<pos=${xPos}>`
                         + `<voffset=${yPos}>`
                         + syllables[i][sylInd].trim();
@@ -204,7 +232,7 @@ function buildStrings() {
             startPos[i] = 80 - lineLength / 2;
         }
 
-        for(let i = Number(prevP); i < Number(counts[pInd]) + Number(prevP); i++) { //repeat for each count in phrase
+        for(let i = prevP; i < Number(counts[pInd]) + prevP; i++) { //repeat for each count in phrase
             syllables[i] = [];
             xPositions[i] = [];
             yPositions[i] = [];
@@ -241,7 +269,7 @@ function buildStrings() {
     }
 }
 
-function rerollSeed() {
-    seed = Math.random() * 4294967296;
-    generatePreview();
-}
+// function rerollSeed() {
+//     seed = Math.random() * 4294967296;
+//     generatePreview();
+// }

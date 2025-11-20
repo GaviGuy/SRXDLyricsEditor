@@ -36,8 +36,6 @@
                     <button onclick="addSourceContainer()"
                             title="Add another unique phrase to the mirage">Add another phrase</button>
                     <br><br>
-                    <button onclick="rerollSeed()"
-                            title="Reroll the random seed and reposition the mirage output">Reroll RNG</button>
                     <button onclick="generateLyricString()"
                             title="Copy output string to clipboard, for use in SRXD">Copy to Clipboard</button>
                 </div>
@@ -46,7 +44,7 @@
                 This tool creates mirage-like displays of text. To use it, input lines of text in lyric format<br>
                 (eg. spaces for new words, hyphen-spaces for new syllables)<br>
                 The second textbox specifies how many times the given text should appear in the mirage.<br>
-                The third textbox specifies the opacity value of given text (currently not working).<br>
+                The third textbox specifies the opacity value of given text.<br>
                 <br><br>
                 /n to force a newline<br>
                 [space] for a new word<br>
@@ -54,8 +52,7 @@
                 =[space] for -[space]<br>
                 <br>
                 Note that text in later phrases is rendered above previous ones.<br>
-                You can leverage this to put a full-opacity phrase above the mirage.<br>
-                (once i properly support opacity, that is)
+                You can leverage this to put a full-opacity phrase above the mirage.
             </div>
         </div>
         <div class="column-right">
@@ -75,8 +72,13 @@
                             step=1 id="config-text-size">Text size</input>
                     <button onClick="revertConfig(2)">default</button>
                 </div>
+                <div>
+                    <input onchange="readParameters(3)" type="number" value="0" title="Seed to use when randomly distributing mirages"
+                            step=1 id="config-seed">RNG Seed</input>
+                    <button onClick="revertConfig(3)">random</button>
+                </div>
                 <div style="margin-left:145px">
-                    <input onchange="readParameters(3)" type="checkbox" value = false title="When checked, syllables are evented individually. When unchecked, syllables are evented in clusters."
+                    <input onchange="readParameters(4)" type="checkbox" value = false title="When checked, syllables are evented individually. When unchecked, syllables are evented in clusters."
                             id="config-gradual-mode">Gradual syllable mode</input>
                 </div>
             </div>
