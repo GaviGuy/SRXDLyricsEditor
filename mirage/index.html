@@ -21,7 +21,12 @@
     <div class="main">
         <div class="column-left">
             <div>
-                Source text (single phrase)
+                Input a single phrase of text.
+                Normal lyric format applies: spaces between each syllable,<br>
+                hyphens to connect syllables, \n to denote a newline<br>
+                <br>
+                The second textbox specifies how many times the given text should appear in the mirage.<br>
+                The third textbox specifies the opacity of the given text (0 to 255).<br>
                 <div id="source-container">
                     <div class="phrase">
                         <textarea onchange="generatePreview()" cols=80
@@ -41,18 +46,8 @@
                 </div>
             </div>
             <div>
-                This tool creates mirage-like displays of text. To use it, input lines of text in lyric format<br>
-                (eg. spaces for new words, hyphen-spaces for new syllables)<br>
-                The second textbox specifies how many times the given text should appear in the mirage.<br>
-                The third textbox specifies the opacity value of given text.<br>
-                <br><br>
-                /n to force a newline<br>
-                [space] for a new word<br>
-                -[space] for a new syllable<br>
-                =[space] for -[space]<br>
-                <br>
                 Note that text in later phrases is rendered above previous ones.<br>
-                You can leverage this to put a full-opacity phrase above the mirage.
+                You can leverage this to put a full-opacity phrase at the top of the mirage.
             </div>
         </div>
         <div class="column-right">

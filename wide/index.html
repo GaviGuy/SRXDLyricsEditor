@@ -19,9 +19,8 @@
     <div class="main">
         <div class="column-left">
             <div>
-                Input a single phrase of text. Automatic line breaks will not be inserted,<br>
-                so if you want a line break, notate it with \n<br>
-                All other lyric formatting applies (spaces between words, hyphens for multisyllablic words)
+                Normal lyric format applies: spaces between each syllable,<br>
+                hyphens to connect syllables, \n to denote a newline<br>
                 <br>
                 <textarea onchange="readParameters(-1)" id="input" rows=2 cols=80
                         title="Phrase input field"></textarea>
@@ -31,8 +30,8 @@
                         title="Copy output string to clipboard, for use in SRXD">Copy to Clipboard</button>
             </div>
             <div>
-                Note: generated lyric strings get very long very quickly. The less you surpass the right margin,<br>
-                the better.
+                Note: generated lyric strings get very long very quickly.<br>
+                The less you surpass the right margin, the better.
             </div>
         </div>
         <div class="column-right">

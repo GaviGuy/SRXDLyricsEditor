@@ -24,8 +24,8 @@
 
 .chapter-label {
     font-size: 2rem;
-    display: flex;
-    justify-self: center;
+    display: block;
+    margin: auto;
 }
 
 .chapter-description {

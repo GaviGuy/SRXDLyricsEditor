@@ -15,7 +15,7 @@ body {
     padding: 2rem;
     box-sizing: border-box;
     margin: 0;
-    user-select: none;
+    user-select: text;
     color: var(--color-main);
     background: var(--color-bg);
 }
@@ -51,6 +51,7 @@ body {
 .preview-container {
     position: absolute;
     pointer-events: none;
+    user-select: none;
     text-align: center;
     font-weight: 800;
     margin-top: 0rem;
