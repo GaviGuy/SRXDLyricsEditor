@@ -20,11 +20,11 @@ function readParameters (index) {
     switch(index) {
         case 0:
             element = document.getElementById("config-text-size");
-            textSize = element.value;
+            textSize = Number(element.value);
             break;
         case 1:
             element = document.getElementById("config-vertical-spacing");
-            verticalGap = element.value;
+            verticalGap = Number(element.value);
             break;
     }
     generatePreview();

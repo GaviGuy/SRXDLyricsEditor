@@ -10,6 +10,8 @@ let kanaSize = defaultKanaSize;
 let romajiSize = defaultRomajiSize;
 let romajiHeight = defaultRomajiHeight;
 
+let syllables = [];
+
 async function init() {
     readParameters(0);
     readParameters(1);
@@ -23,19 +25,19 @@ function readParameters (index) {
     switch(index) {
         case 0:
             element = document.getElementById("config-kana-spacing");
-            kanaSpacing = element.value;
+            kanaSpacing = Number(element.value);
             break;
         case 1:
             element = document.getElementById("config-kana-size");
-            kanaSize = element.value;
+            kanaSize = Number(element.value);
             break;
         case 2:
             element = document.getElementById("config-romaji-size");
-            romajiSize = element.value;
+            romajiSize = Number(element.value);
             break;
         case 3:
             element = document.getElementById("config-romaji-height");
-            romajiHeight = element.value;
+            romajiHeight = Number(element.value);
             break;
     }
     generatePreview();
@@ -83,91 +85,90 @@ function generateRomaji() {
 }
 
 function generatePreview() {
-    let japaneseString = document.getElementById("input-japanese").value;
-
-    let romajiString = document.getElementById("input-romaji").value;
-    romajiString = romajiString.replaceAll("|", " | ").replace(/\s+/g, ' ');
-    let romajiArray = romajiString.split(" ");
-
-    let initialPos = (canvasWidth - kanaSpacing * (japaneseString.length - 1)) / 2 - kanaSize / 2;
-    let romajiPositions = calculateRomajiPositions(romajiArray, initialPos);
-
-    let romajiH = (romajiSize * -1.75);
-    let kanaH = 1 * romajiH + 1 * romajiHeight - 1.75 * (kanaSize - romajiSize);
-    
     let previewElement = document.getElementById("preview");
     clearPreview(previewElement);
 
-    let skips = 0;
-    // let x = [],
-    //     y = [],
-    //     s = [],
-    //     t = [],
-    //     a = [];
-    // let ind = 0;
+    let japaneseString = document.getElementById("input-japanese").value;
+
+    let romajiString = document.getElementById("input-romaji").value;
+    let romajiArray = convertStringToSyllables(romajiString);
+
+    let sInd = 0;
+
+    let initialPos = (canvasWidth - kanaSpacing * (japaneseString.length - 1) - kanaSize) / 2;
+    let romajiPositions = calculateRomajiPositions(romajiArray, initialPos);
+    let tooLong = 0;
+
     for(let i = 0; i < japaneseString.length; i++) {
-        while(romajiArray[i+skips] == "|") skips++;
-        appendToPreview(previewElement, initialPos + kanaSpacing * i, kanaH + 40, kanaSize, japaneseString[i]);
-        // x[ind] = initialPos + kanaSpacing * i;
-        // y[ind] = Number(kanaH) + 40;
-        // s[ind] = Number(kanaSize);
-        // t[ind] = japaneseString[i];
-        // a[ind] = 255;
-        // ind++;
-        if(romajiArray[i+skips] != '*')
-            appendToPreview(previewElement, romajiPositions[i], romajiH + 40, romajiSize, romajiArray[i + skips]);
-                // x[ind] = romajiPositions[i];
-                // y[ind] = Number(romajiH) + 40;
-                // s[ind] = Number(romajiSize);
-                // t[ind] = romajiArray[i + skips];
-                // a[ind] = 255;
-                // ind++;
+        syllables[sInd] = {
+            x: initialPos + kanaSpacing * i,
+            y: 0,
+            s: kanaSize,
+            t: japaneseString[i]
+        };
+        appendToPreview2(previewElement, syllables[sInd]);
+        sInd++;
+
+        if(i >= romajiArray.length || romajiArray[i] == '*' || romajiArray[i] == '*-') {
+            syllables[sInd] = undefined;
+        }
+        else {
+            syllables[sInd] = {
+                x: romajiPositions[i],
+                y: - romajiHeight,
+                s: romajiSize,
+                t: trimSyllable(romajiArray[i])
+            };
+            appendToPreview2(previewElement, syllables[sInd]);
+        }
+        sInd++;
     }
-    // console.log(x);
-    // console.log(y);
-    // console.log(s);
-    // console.log(t);
-    // console.log(a);
-
-
 }
 
 function calculateRomajiPositions(romajiArray, initialPos) {
-    let mode = document.getElementById("config-romaji-mode");
-    mode = mode.checked;
-    let wordLength = 1;
-    let numSplit = 0;
-    let romajiPositions = [];
-    for(let i = 0; i < romajiArray.length; i += wordLength + 1) {
-        let nextSplit = romajiArray.length;
-        if(!mode) nextSplit = romajiArray.indexOf("|", i);
-        if(nextSplit < 0) nextSplit = romajiArray.length;
-
-        wordLength = nextSplit - i;
-        let word = "";
-        for (let j = 0; j < wordLength; j++) {
-            word += romajiArray[i+j];
-        }
-        let wordWidth = getWordWidth(word, romajiSize);
-        let centerPos = initialPos + 0.5 * kanaSize + (kanaSpacing * (i + ((wordLength - 1) / 2) - numSplit)) ;
-        if(mode) centerPos = 80;
-        let leftPos = centerPos - (wordWidth / 2)
-        let accumulatedOffset = 0;
-
-        for(let j = 0; j < wordLength; j++) {
-            let syllableWidth = getWordWidth(romajiArray[i+j], romajiSize);
-            
-            if(romajiArray[i+j] != '|')
-                romajiPositions.push(leftPos + accumulatedOffset);
-            accumulatedOffset += syllableWidth;
-        }
-        numSplit++;
-        if(numSplit > 50) {
-            console.error("infinite loop");
-            break;
+    let mode = document.getElementById("config-romaji-mode").checked;
+    let ret = [];
+    if(mode) {
+        let startPos = getLineStartingPositions(romajiArray, romajiSize)[0];
+        let aOffset = 0;
+        for(let i = 0; i < romajiArray.length; i++) {
+            ret[i] = startPos + aOffset;
+            if(romajiArray[i] != '*' && romajiArray[i] != '*-') {
+                aOffset += getWordWidth(trimSyllable(romajiArray[i]), romajiSize);
+            }
+            if(romajiArray[i][romajiArray[i].length - 1] != '-') {
+                aOffset += 0.3 * romajiSize;
+            }
         }
     }
-    return romajiPositions;
+    else {
+        let i = 0;
+        while(i < romajiArray.length) {
+            let last = romajiArray[i][romajiArray[i].length-1];
+            let wordWidth = 0;
+            if(romajiArray[i] != '*' && romajiArray[i] != '*-') {
+                wordWidth = getWordWidth(romajiArray[i], romajiSize);
+            }
+            let wordLength = 1;
+            while(last == '-' || last == '=') {
+                if(romajiArray[i+wordLength] != '*-') {
+                    wordWidth += getWordWidth(trimSyllable(romajiArray[i+wordLength]), romajiSize);
+                }
+                last = romajiArray[i + wordLength][romajiArray[i + wordLength].length-1];
+                wordLength++;
+            }
+            
+            let wordStartPos = initialPos + kanaSpacing * (i + (wordLength - 1) / 2) + (kanaSize - wordWidth) / 2; 
+            let aOffset = 0;
+            for(let j = 0; j < wordLength; j++) {
+                ret[i+j] = wordStartPos + aOffset;
+                if(romajiArray[i+j] != '*' && romajiArray[i+j] != '*-')
+                    aOffset += getWordWidth(trimSyllable(romajiArray[i+j]), romajiSize);
+            }
+            i += wordLength;
+        }
+    }
+    return ret;
 }
 
 function generateLyricString() {
@@ -202,9 +203,9 @@ function generateLyricString() {
         }
         let kanaString = `<size=${kanaSize}><pos=${kanaPos}>${japaneseString[i]}`;
         let romajiString = "";
-        if(romajiArray[romajiIndex] != '*')
+        if(romajiArray[romajiIndex] != '*' && romajiArray[romajiIndex] != '*-')
             romajiString = `<size=${romajiSize}><pos=${romajiPos}><voffset=${h}>`
-                + romajiArray[romajiIndex] + `</voffset>`;
+                + trimSyllable(romajiArray[romajiIndex]) + `</voffset>`;
         returnString += kanaString + romajiString + ' ';
 
         romajiIndex++;
