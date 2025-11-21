@@ -6,7 +6,7 @@ function getWordWidth (word, fontSize) {
 }
 
 function appendToPreview(previewElement, posX, posY, size, text, alpha) {
-    if(!alpha || alpha > 255) alpha = 255;
+    if(!alpha && alpha != 0 || alpha > 255) alpha = 255;
     if(alpha < 0) alpha = 0;
     let str = Number(alpha).toString(16);
     if(alpha < 16) str = '0' + Number(alpha).toString(16)
@@ -19,7 +19,7 @@ function appendToPreview(previewElement, posX, posY, size, text, alpha) {
 
 function appendToPreview2(previewElement, obj) {
     if(!obj) return;
-    if(!(obj.a) || (obj.a) > 255) obj.a = 255;
+    if(!(obj.a) && obj.a != 0 || (obj.a) > 255) obj.a = 255;
     if((obj.a) < 0) obj.a = 0;
     let str = Number(obj.a).toString(16);
     if((obj.a) < 16) str = '0' + str;
