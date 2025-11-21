@@ -23,10 +23,14 @@ function appendToPreview2(previewElement, obj) {
     let str = Number(obj.a).toString(16);
     if((obj.a) < 16) str = '0' + str;
     let newElement = previewElement.appendChild(document.createElement("p"));
-    newElement.style = `font-weight: 800; position: absolute;`
-                    + `left: ${2*(obj.x)}px; top: ${60+2*(obj.y - obj.s * 1.2)}px; font-size:${2*(obj.s)}px;`
-                    + `color: #FFFFFF${str};`;
-    newElement.textContent = obj.t;
+    let styleStr = `font-weight: 800; position: absolute;`
+                + `left: ${2*(obj.x)}px; top: ${60+2*(obj.y - obj.s * 1.5)}px;`
+                + `font-size:${2*(obj.s)}px;`;             
+    if(obj.a) styleStr += `color: #FFFFFF${str};`;
+    if(obj.r) styleStr += `rotate: 0 0 1 ${obj.r}deg`;
+    
+    newElement.style = styleStr
+    newElement.textContent = obj.t; 
 }
 
 function clearPreview(previewElement) {
@@ -64,24 +68,31 @@ function trimSyllable (syl) {
 }
 
 function getLineStartingPositions (sylArray, textSize, spaceMult) {
+    let positions = [];
+    let lengths = getLineLengths(sylArray, textSize, spaceMult);
+    for(let i = 0; i < lengths.length; i++) {
+        positions[i] = 80 - lengths[i] / 2;
+    }
+    return positions;
+}
+
+function getLineLengths (sylArray, textSize, spaceMult) {
     if(spaceMult != 0 && !spaceMult) spaceMult = 1;
     let str = "";
     let newlinesCount = 0;
-    let positions = [];
+    let lengths = [];
     for(let i = 0; i < sylArray.length; i++) {
         if(sylArray[i] != "\\n") {
             str += trimSyllable(sylArray[i]);
         }
         if(sylArray[i] == "\\n" || i == sylArray.length - 1) {
-            positions[newlinesCount] = getWordWidth(str.trim(), textSize);
+            lengths[newlinesCount] = getWordWidth(str.trim(), textSize);
 
             let numSpaces = str.split(' ').length - 1;
-            positions[newlinesCount] += numSpaces * 0.2 * (spaceMult - 1) * textSize;
-
-            positions[newlinesCount] = 80 - positions[newlinesCount] / 2;
+            lengths[newlinesCount] += numSpaces * 0.2 * (spaceMult - 1) * textSize;
             str = "";
             newlinesCount++;
         }
     }
-    return positions;
+    return lengths;
 }
