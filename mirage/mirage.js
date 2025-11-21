@@ -17,7 +17,7 @@ const defaultCount = 2;
 
 let maxX = defaultMaxX;
 let maxY = defaultMaxY;
-let textSize = defaultTextSize;
+let textSize = defaultTopTextSize;
 let mode = 0;
 
 
@@ -25,6 +25,7 @@ async function init() {
     readParameters(0);
     readParameters(1);
     readParameters(2);
+    readParameters(4);
     revertConfig(3);
 }
 init();
@@ -71,8 +72,8 @@ function revertConfig(index) {
             break;
         case 2:
             element = document.getElementById("config-text-size");
-            element.value = defaultTextSize;
-            textSize = defaultTextSize;
+            element.value = defaultTopTextSize;
+            textSize = defaultTopTextSize;
             break;
         case 3:
             element = document.getElementById("config-seed");
@@ -203,9 +204,10 @@ function generateLyricString() {
                 stillHasWords = true;
             }
         }
-        retString += ' ';
+        if(!mode) retString += ' ';
         sylInd++;
     }
+    retString = retString.trim();
     navigator.clipboard.writeText(retString);
     console.log(retString);
 }

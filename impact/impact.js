@@ -1,11 +1,11 @@
-const defaultTextSize = 10;
+const defaultTopTextSize = 10;
 const defaultImpactSize = 12;
 const defaultVerticalGap = 12;
 const defaultImpactOffset = 5;
 const defaultImpactOpacity = 40;
 const defaultSpacingMult = 2;
 
-let textSize = defaultTextSize;
+let textSize = defaultTopTextSize;
 let impactSize = defaultImpactSize;
 let verticalGap = defaultVerticalGap;
 let impactOffset = defaultImpactOffset;
@@ -61,8 +61,8 @@ function revertConfig(index) {
     switch(index) {
         case 0:
             element = document.getElementById("config-text-size");
-            element.value = defaultTextSize;
-            textSize = defaultTextSize;
+            element.value = defaultTopTextSize;
+            textSize = defaultTopTextSize;
             break;
         case 1:
             element = document.getElementById("config-impact-size");
@@ -209,7 +209,7 @@ function generateLyricString() {
                 + `<voffset=${-syllables[i+1].y}>`
                 + syllables[i+1].t + ' ';
     }
+    retString = retString.trim();
     navigator.clipboard.writeText(retString);
     console.log(retString);
-    console.log(syllables);
 }

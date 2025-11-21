@@ -179,7 +179,7 @@ function generateLyricString() {
     romajiString = romajiString.replaceAll("|", " | ").replace(/\s+/g, ' ');
     let romajiArray = romajiString.split(" ");
     let romajiIndex = 0;
-    let returnString = "@<line-height=0em><align=left>";
+    let retString = "@<line-height=0em><align=left>";
 
     let initialPos = (canvasWidth - kanaSpacing * (japaneseString.length - 1)) / 2 - kanaSize / 2;
     let romajiPositions = calculateRomajiPositions(romajiArray, initialPos);
@@ -188,6 +188,7 @@ function generateLyricString() {
 
     //assemble final string
     let tooShort = 0;
+    let romajiSkipped = false;
     for(let i = 0; i < japaneseString.length; i++) {
         if(romajiArray[romajiIndex] == "|") romajiIndex++;
 
@@ -201,12 +202,19 @@ function generateLyricString() {
             romajiArray.push("Undefined");
             romajiPos = 0;
         }
-        let kanaString = `<size=${kanaSize}><pos=${kanaPos}>${japaneseString[i]}`;
+        let kanaString = `<pos=${kanaPos}>${japaneseString[i]}`;
+        if(!romajiSkipped) {
+            kanaString = `<size=${kanaSize}>` + kanaString;
+        }
         let romajiString = "";
-        if(romajiArray[romajiIndex] != '*' && romajiArray[romajiIndex] != '*-')
+        if(romajiArray[romajiIndex] != '*' && romajiArray[romajiIndex] != '*-') {
             romajiString = `<size=${romajiSize}><pos=${romajiPos}><voffset=${h}>`
                 + trimSyllable(romajiArray[romajiIndex]).trim() + `</voffset>`;
-        returnString += kanaString + romajiString + ' ';
+            romajiSkipped = false;
+        }
+        else
+            romajiSkipped = true;
+        retString += kanaString + romajiString + ' ';
 
         romajiIndex++;
     }
@@ -222,6 +230,7 @@ function generateLyricString() {
         if(tooMany > 0) alert(`Found ${tooMany} extra romaji word${tooMany > 1 ? 's' : ''}. Double check your inputs.`);
     }
 
-    navigator.clipboard.writeText(returnString);
-    console.log(returnString);
+    retString = retString.trim();
+    navigator.clipboard.writeText(retString);
+    console.log(retString);
 }

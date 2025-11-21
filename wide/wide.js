@@ -3,7 +3,7 @@ const defaultVerticalGap = 12;
 const defaultXOffset = 0;
 const defaultYOffset = 0;
 
-let textSize = defaultTextSize;
+let textSize = defaultTopTextSize;
 let verticalGap = defaultVerticalGap;
 let xOffset = defaultXOffset;
 let yOffset = defaultYOffset;
@@ -47,8 +47,8 @@ function revertConfig(index) {
     switch(index) {
         case 0:
             element = document.getElementById("config-text-size");
-            element.value = defaultTextSize;
-            textSize = defaultTextSize;
+            element.value = defaultTopTextSize;
+            textSize = defaultTopTextSize;
             break;
         case 1:
             element = document.getElementById("config-vertical-spacing");
@@ -187,6 +187,7 @@ function generateLyricString() {
     retString = retString.trim();
     retString += `<voffset=${-verticalGap * newlinesCount / 2 - yOffset}><alpha=#00>.`
     
+    retString = retString.trim();
     navigator.clipboard.writeText(retString);
     console.log(retString);
 }
