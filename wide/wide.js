@@ -76,12 +76,12 @@ function generatePreview () {
     let str = document.getElementById("input").value;
     let syl = convertStringToSyllables(str);
 
-    let x = [],
-        y = [],
-        s = [],
-        t = [],
-        a = [];
-    let buildInd = 0;
+    // let x = [],
+    //     y = [],
+    //     s = [],
+    //     t = [],
+    //     a = [];
+    // let buildInd = 0;
     
     str = "";
     startPos = [0];
@@ -112,12 +112,12 @@ function generatePreview () {
         let yPos = Number(verticalGap * (numNewlines - newlinesCount / 2));
         appendToPreview(previewElement, xPos, 30 + yPos + yOffset, textSize, trimSyllable(syl[i]), 255);
         
-        x[buildInd] = Math.round(xPos);
-        y[buildInd] = Math.round(30 + yPos + yOffset);
-        s[buildInd] = Number(textSize);
-        t[buildInd] = trimSyllable(syl[i]);
-        a[buildInd] = Number(255);
-        buildInd++;
+        // x[buildInd] = Math.round(xPos);
+        // y[buildInd] = Math.round(30 + yPos + yOffset);
+        // s[buildInd] = Number(textSize);
+        // t[buildInd] = trimSyllable(syl[i]);
+        // a[buildInd] = Number(255);
+        // buildInd++;
 
         aOffset += getWordWidth(trimSyllable(syl[i]), textSize);
         if(syl[i][syl[i].length-1] != '-') {
@@ -125,11 +125,11 @@ function generatePreview () {
         }
     }
     
-    console.log(x);
-    console.log(y);
-    console.log(s);
-    console.log(t);
-    console.log(a);
+    // console.log(x);
+    // console.log(y);
+    // console.log(s);
+    // console.log(t);
+    // console.log(a);
 }
 
 function generateLyricString() {

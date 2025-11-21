@@ -18,13 +18,84 @@ let wideY = [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8
 let wideS = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5];
 let wideT = ["Al", "len ", "wren", "ches ", "ger", "bil ", "feed", "ers ", "toi", "let ", "seats ", "e", "lec", "tric ", "heat", "ers ", "trash ", "com", "pac", "tors ", "juice ", "ex", "trac", "tors ", "show", "er ", "rods ", "and ", "wa", "ter ", "me", "ters ", "Wal", "kie-", "talk", "ies ", "cop", "per ", "wi", "res ", "safe", "ty ", "gog", "gles ", "ra", "di", "al ", "ti", "res ", "B", "B ", "pel", "lets ", "rub", "ber ", "mal", "lets ", "fans ", "and ", "de", "hu", "mi", "di", "fi", "ers ", "Pic", "ture ", "hang", "ers ", "pa", "per ", "cut", "ters ", "waf", "fle ", "i", "rons ", "win", "dow ", "shut", "ters ", "paint ", "re", "mov", "ers ", "win", "dow ", "lou", "vers ", "ma", "sking ", "tape ", "and ", "plas", "tic ", "gut", "ters ", "Kitch", "en ", "fau", "cets ", "fol", "ding ", "ta", "bles ", "wea", "ther ", "strip", "ping ", "jump", "er ", "ca", "bles ", "hooks ", "and ", "tack", "le ", "grout ", "and ", "spa", "ckle ", "po", "wer ", "fog", "gers ", "spoons ", "and ", "la", "dles ", "Pes", "ti", "cides ", "for ", "fu", "mi", "ga", "tion ", "high-", "per", "for", "mance ", "lu", "bri", "ca", "tion ", "me", "tal ", "roof", "ing ", "wa", "ter", "proo", "fing ", "mul", "ti-", "pur", "pose ", "in", "su", "la", "tion ", "Air ", "com", "pres", "sors ", "brass ", "con", "nec", "tors ", "wreck", "ing ", "chi", "sels ", "smoke ", "de", "tec", "tors ", "ti", "re ", "gau", "ges ", "ham", "ster ", "ca", "ges ", "ther", "mo", "stats ", "and ", "bug ", "de", "flec", "tors ", "Trai", "ler ", "hitch ", "de", "mag", "ne", "ti", "zers ", "au", "to", "ma", "tic ", "cir", "cum", "ci", "sers ", "ten", "nis ", "rack", "ets ", "an", "gle ", "brack", "ets ", "Du", "ra", "cells ", "and ", "En", "er", "gi", "zers ", "Sof", "fit ", "pa", "nels ", "cir", "cuit ", "brea", "kers ", "va", "cuum ", "clea", "ners ", "cof", "fee ", "ma", "kers ", "cal", "cu", "la", "tors ", "ge", "ne", "ra", "tors ", "mat", "ching ", "salt ", "and ", "pep", "per ", "shak", "ers "];
 let wideA = [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255];
-
+let impact = [
+  {
+    "x": 38,
+    "y": -1,
+    "s": 12,
+    "t": "BECAUSE",
+    "a": 60
+  },
+  {
+    "x": 44,
+    "y": 0,
+    "s": 10,
+    "t": "BECAUSE",
+    "a": 255
+  },
+  {
+    "x": 100,
+    "y": -1,
+    "s": 12,
+    "t": "ITS",
+    "a": 60
+  },
+  {
+    "x": 100,
+    "y": 0,
+    "s": 10,
+    "t": "ITS",
+    "a": 255
+  },
+  {
+    "x": 32,
+    "y": 13,
+    "s": 12,
+    "t": "NOT",
+    "a": 60
+  },
+  {
+    "x": 36,
+    "y": 12,
+    "s": 10,
+    "t": "NOT",
+    "a": 255
+  },
+  {
+    "x": 62,
+    "y": 13,
+    "s": 12,
+    "t": "YOUR",
+    "a": 60
+  },
+  {
+    "x": 65,
+    "y": 12,
+    "s": 10,
+    "t": "YOUR",
+    "a": 255
+  },
+  {
+    "x": 101,
+    "y": 13,
+    "s": 12,
+    "t": "LIFE",
+    "a": 60
+  },
+  {
+    "x": 101,
+    "y": 12,
+    "s": 10,
+    "t": "LIFE",
+    "a": 255
+  }
+];
 
 let previews = [
     {
         title: "Romaji and Furigana",
         link: "furigana",
-        description: "Useful for adding pronunciations to words. Built specifically for Japanese.",
+        description: "Add pronunciations to words. Built specifically for Japanese.",
         x: furiganaX,
         y: furiganaY,
         s: furiganaS,
@@ -34,12 +105,18 @@ let previews = [
     {
         title: "Mirage",
         link: "mirage",
-        description: "Renders text multiple times at a low opacity to create a blurry effect.",
+        description: "Render text multiple times at a low opacity to create a blurry effect.",
         x: mirageX,
         y: mirageY,
         s: mirageS,
         t: mirageT,
         a: mirageA
+    },
+    {
+        title: "Impact",
+        link: "impact",
+        description: "Render a phrase layered over a shadow of itself.",
+        syllables: impact
     },
     {
         title: "Parallel",
@@ -63,7 +140,7 @@ let previews = [
     }
 ]
 
-function assemblePreview (previewElement) {
+function assemblePreviews () {
     for(let i = 0; i < previews.length; i++) {
         let root = document.getElementById("chapter-root");
 
@@ -91,10 +168,17 @@ function assemblePreview (previewElement) {
         let previewElement = container.appendChild(document.createElement("div"));
         previewElement.classList.add("preview-container");
         
-        for(let j = 0; j < previews[i].x.length; j++) {
-            appendToPreview(previewElement, previews[i].x[j], previews[i].y[j], 
-                    previews[i].s[j], previews[i].t[j], previews[i].a[j]); 
+        if(previews[i].syllables) {
+            for(let j = 0; j < previews[i].syllables.length; j++) {
+                appendToPreview2(previewElement, previews[i].syllables[j]);
+            }
+        }
+        else {
+            for(let j = 0; j < previews[i].x.length; j++) {
+                appendToPreview(previewElement, previews[i].x[j], previews[i].y[j], 
+                        previews[i].s[j], previews[i].t[j], previews[i].a[j]); 
+            }
         }
     }
 }
-assemblePreview();
+assemblePreviews();

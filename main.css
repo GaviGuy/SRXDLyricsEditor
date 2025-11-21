@@ -39,18 +39,6 @@ body {
     gap: 2rem;
 }
 
-.preview-container {
-    position: absolute;
-    pointer-events: none;
-    font-weight: 800;
-    margin-top: 0rem;
-    gap: 0rem;
-    padding: 0rem;
-    height:160px;
-    width:320px;
-    background-color: #110911;
-}
-
 .preview-sizer {
     display: inline-block;
     height: 160px;
@@ -58,6 +46,19 @@ body {
     gap: 0;
     padding: 0;
     margin: 0;
+}
+
+.preview-container {
+    position: absolute;
+    pointer-events: none;
+    text-align: center;
+    font-weight: 800;
+    margin-top: 0rem;
+    gap: 0rem;
+    padding: 0rem;
+    height:160px;
+    width:320px;
+    background-color: #110911;
 }
 
 .widther {
