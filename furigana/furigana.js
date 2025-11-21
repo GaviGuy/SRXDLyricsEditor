@@ -205,7 +205,7 @@ function generateLyricString() {
         let romajiString = "";
         if(romajiArray[romajiIndex] != '*' && romajiArray[romajiIndex] != '*-')
             romajiString = `<size=${romajiSize}><pos=${romajiPos}><voffset=${h}>`
-                + trimSyllable(romajiArray[romajiIndex]) + `</voffset>`;
+                + trimSyllable(romajiArray[romajiIndex]).trim() + `</voffset>`;
         returnString += kanaString + romajiString + ' ';
 
         romajiIndex++;
