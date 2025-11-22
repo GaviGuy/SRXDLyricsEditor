@@ -3,7 +3,7 @@ const defaultVerticalGap = 12;
 const defaultXOffset = 0;
 const defaultYOffset = 0;
 
-let textSize = defaultTopTextSize;
+let textSize = defaultTextSize;
 let verticalGap = defaultVerticalGap;
 let xOffset = defaultXOffset;
 let yOffset = defaultYOffset;
@@ -47,8 +47,8 @@ function revertConfig(index) {
     switch(index) {
         case 0:
             element = document.getElementById("config-text-size");
-            element.value = defaultTopTextSize;
-            textSize = defaultTopTextSize;
+            element.value = defaultTextSize;
+            textSize = defaultTextSize;
             break;
         case 1:
             element = document.getElementById("config-vertical-spacing");

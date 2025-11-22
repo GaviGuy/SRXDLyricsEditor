@@ -17,7 +17,7 @@ const defaultCount = 2;
 
 let maxX = defaultMaxX;
 let maxY = defaultMaxY;
-let textSize = defaultTopTextSize;
+let textSize = defaultTextSize;
 let mode = 0;
 
 
@@ -72,8 +72,8 @@ function revertConfig(index) {
             break;
         case 2:
             element = document.getElementById("config-text-size");
-            element.value = defaultTopTextSize;
-            textSize = defaultTopTextSize;
+            element.value = defaultTextSize;
+            textSize = defaultTextSize;
             break;
         case 3:
             element = document.getElementById("config-seed");
