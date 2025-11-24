@@ -199,7 +199,6 @@ function calculateRomajiPositions(romajiArray, initialPos) {
 
 function isPolyOnic (string) {
     string = string.toLowerCase().trim();
-    console.log(string);
     if(!string) return false;
     if(string.length < 2) return false;
     if(string.length > 3) return true;
@@ -210,7 +209,7 @@ function isPolyOnic (string) {
         else return true;
     }
     // consonant-y-vowel or consonant-h-vowel, eg. "sha", "kyu", "chi"
-    if(string[2] == 'y' || string[2] == 'h' && !(reg.test(string[0])) && string[3] == vowel) return false;
+    if(string[2] == 'y' || string[2] == 'h' && !(reg.test(string[0])) && string[3] == vowel || string == 'tsu') return false;
     return true;
 
 }
