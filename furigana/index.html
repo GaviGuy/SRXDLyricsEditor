@@ -40,24 +40,37 @@
                 <textarea onchange="readParameters(-1)" id="input-romaji" rows=2 cols=80
                         title="Pronunciation input field"></textarea>
                 <br>
+                <label for="optimization">Optimization:</label>
+                <select onchange="readParameters(4)" name="optimization" id="input-optimize">
+                    <option value=0>None</option>
+                    <option value=1>Mono-On only</option>
+                    <option value=2>Full</option>
+                </select>
+                
                 <button onclick="generateLyricString()"
                         title="Copy output string to clipboard, for use in SRXD">Copy Output to Clipboard</button>
+                <br>
+                <br>
+                <div style="font-size:0.75em" id="optimization-description"></div>
+                <div style="font-size:0.75em" id="optimization-recommendation"></div>
             </div>
-            <div>
-                As an example, the first Japanese line from Lovesick.</br>
+            <div class="guide">
+                As an example, I'll use the first Japanese line from Lovesick.
                 I first put this line into the top box:<br>
                 <b>諦めましょうこの人生</b><br><br>
+
                 For the next box, I start with romaji:<br>
                 <b>akiramemashou kono jinsei</b><br><br>
+
                 Next, I need to split the romaji into chunks that match each kana:<br>
-                <b>akira- me- ma- sh- o- u  ko- no  jin- sei</b><br>
-                <br>
+                <b>akira- me- ma- sh- o- u  ko- no  jin- sei</b><br><br>
+
                 If I wanted to do furigana, I would use something like this instead:<br>
-                <b>あきら * * * * * * * じん- せい</b><br>
-                <br>
-                Notice how the number of kana and the number of pronounced chunks match.<br>
-                With both boxes populated, I can click "Copy Output to Clipboard" and<br>
-                paste into the Spin Rhythm lyric editor.<br>
+                <b>あきら * * * * * * * じん- せい</b><br><br>
+                
+                Notice how the number of kana and the number of pronounced chunks match.
+                With both boxes populated, I can click "Copy Output to Clipboard" and
+                paste into the Spin Rhythm lyric editor.
             </div>
         </div>
         <div class="column-right">

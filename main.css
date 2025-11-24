@@ -1,5 +1,6 @@
 :root {
     --color-bg: #221122;
+    --color-bg-light: #331933;
     --color-main: rgb(255, 255, 255);
 
     font-family: "Montserrat", sans-serif;
@@ -37,6 +38,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    max-width:700px;
 }
 
 .preview-sizer {
@@ -69,4 +71,9 @@ body {
     width: auto;
     font-weight: 800;
     white-space: nowrap;
+}
+
+.guide {
+    padding: 1rem;
+    background: var(--color-bg-light);
 }

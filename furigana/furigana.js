@@ -4,11 +4,28 @@ const defaultKanaSpacing = 12;
 const defaultKanaSize = 12;
 const defaultRomajiSize = 8;
 const defaultRomajiHeight = 15;
+const defaultOptimize = 0;
+
+const reg = /^[aeiou]$/;
 
 let kanaSpacing = defaultKanaSpacing;
 let kanaSize = defaultKanaSize;
 let romajiSize = defaultRomajiSize;
 let romajiHeight = defaultRomajiHeight;
+let optimize = defaultOptimize;
+
+let optimizeStrings = [
+    [
+        "Output string will always put kana before pronunciation.",
+        "Output string will alternate kana and pronunciations to reduce the number of tags, but only in mono-on syllables (eg. Ka or No, as opposed to Akira or Kai).",
+        "Output string will always alternate kana and pronunciations regardless of word structure."
+    ],
+    [
+        "Use this for maximum clarity and organization. (0% length reduction)",
+        "Use this if you intend to break up pronounced chunks post-generation. (~10% length reduction)",
+        "Use this if you do not intend to seperate into syllables. (~25% length reduction)"
+    ]
+];
 
 let syllables = [];
 
@@ -17,6 +34,7 @@ async function init() {
     readParameters(1);
     readParameters(2);
     readParameters(3);
+    readParameters(4);
 }
 init();
 
@@ -38,6 +56,14 @@ function readParameters (index) {
         case 3:
             element = document.getElementById("config-romaji-height");
             romajiHeight = Number(element.value);
+            break;
+        case 4:
+            element = document.getElementById("input-optimize");
+            optimize = Number(element.value);
+            element = document.getElementById("optimization-description");
+            element.textContent = optimizeStrings[0][optimize];
+            element = document.getElementById("optimization-recommendation");
+            element.textContent = optimizeStrings[1][optimize];
             break;
     }
     generatePreview();
@@ -97,7 +123,6 @@ function generatePreview() {
 
     let initialPos = (canvasWidth - kanaSpacing * (japaneseString.length - 1) - kanaSize) / 2;
     let romajiPositions = calculateRomajiPositions(romajiArray, initialPos);
-    let tooLong = 0;
 
     for(let i = 0; i < japaneseString.length; i++) {
         syllables[sInd] = {
@@ -171,65 +196,95 @@ function calculateRomajiPositions(romajiArray, initialPos) {
     return ret;
 }
 
-function generateLyricString() {
-    generatePreview();
-    let japaneseString = document.getElementById("input-japanese").value;
+function isPolyOnic (string) {
+    string = string.toLowerCase();
+    if(!string) return false;
+    if(string.length < 2) return false;
+    if(string.length > 3) return true;
+    if(string.length == 2) {
+        // consonant-vowel, eg. 'ka'
+        if(!(reg.test(string[0])) && reg.test(string[0])) return false;
+        // any other 2-letter config
+        else return true;
+    }
+    // consonant-y-vowel or consonant-h-vowel, eg. "sha", "kyu", "chi"
+    if(string[2] == 'y' || string[2] == 'h' && !(reg.test(string[0])) && string[3] == vowel) return false;
+    return true;
 
-    let romajiString = document.getElementById("input-romaji").value;
-    romajiString = romajiString.replaceAll("|", " | ").replace(/\s+/g, ' ');
-    let romajiArray = romajiString.split(" ");
-    let romajiIndex = 0;
+}
+
+function generateLyricString() {
+    let japaneseString = document.getElementById("input-japanese").value;
+    let romajiString = convertStringToSyllables(document.getElementById("input-romaji").value);
+    let diff = japaneseString.length - romajiString.length;
+    if(diff > 0) {
+        alert(`Missing ${diff} pronounced syllable${diff > 1 ? 's' : ''}. Double check your inputs.`)
+    }
+    else if (diff < 0) {
+        alert(`Found ${-diff} extra pronounced syllable${diff < -1 ? 's' : ''}. Double check your inputs.`)
+    }
+
+
+    generatePreview();
     let retString = "@<line-height=0em><align=left>";
 
-    let initialPos = (canvasWidth - kanaSpacing * (japaneseString.length - 1)) / 2 - kanaSize / 2;
-    let romajiPositions = calculateRomajiPositions(romajiArray, initialPos);
-    
+    let prevType = -1;
+    for(let i = 0; i < syllables.length; i += 2) {
+        let kx = Math.round(syllables[i].x),
+            px = Math.round(syllables[i+1].x);
+        let poly = false;
+        if(syllables[i+1]) poly = isPolyOnic(syllables[i+1].t);
+        if(optimize == 0 || optimize == 1 && poly || prevType == -1) { //Don't optimize
+            if(prevType == 0) {
+                retString += `<pos=${kx}>`
+                        + syllables[i].t.trim();
+            }
+            else {
+                retString += `<pos=${kx}>`
+                        + "</voffset>"
+                        + `<size=${syllables[i].s}>`
+                        + syllables[i].t.trim();
+            }
+            prevType = 0;
 
-
-    //assemble final string
-    let tooShort = 0;
-    let romajiSkipped = false;
-    for(let i = 0; i < japaneseString.length; i++) {
-        if(romajiArray[romajiIndex] == "|") romajiIndex++;
-
-        //truncate float numbers
-        let kanaPos = Math.round(initialPos + kanaSpacing * i);
-        let romajiPos = Math.round(romajiPositions[i]);
-        let h = Math.round(romajiHeight);
-
-        if(romajiIndex >= romajiArray.length) {
-            tooShort++;
-            romajiArray.push("Undefined");
-            romajiPos = 0;
+            if(syllables[i+1]) {
+                retString += `<pos=${px}>`
+                        + `<voffset=${-syllables[i+1].y}>`
+                        + `<size=${syllables[i+1].s}>`
+                        + syllables[i+1].t.trim();
+                prevType = 1;
+            }
         }
-        let kanaString = `<pos=${kanaPos}>${japaneseString[i]}`;
-        if(!romajiSkipped) {
-            kanaString = `<size=${kanaSize}>` + kanaString;
+        else { //Do optimize
+            if(prevType == 0) {
+                //add kana (no tags)
+                retString += `<pos=${Math.round(kx)}>`
+                        + syllables[i].t.trim();
+                //add pronunciation (tags)
+                if(syllables[i+1]) {
+                    retString += `<pos=${px}>`
+                            + `<voffset=${-syllables[i+1].y}>`
+                            + `<size=${syllables[i+1].s}>`
+                            + syllables[i+1].t.trim();
+                    prevType = 1;
+                }
+            }
+            else {
+                //add pronunciation (no tags)
+                if(syllables[i+1]) {
+                    retString += `<pos=${px}>`
+                            + syllables[i+1].t.trim();
+                }
+                //add kana (tags)
+                retString += `<pos=${kx}>`
+                        + "</voffset>"
+                        + `<size=${syllables[i].s}>`
+                        + syllables[i].t.trim();
+                prevType = 0
+            }
         }
-        let romajiString = "";
-        if(romajiArray[romajiIndex] != '*' && romajiArray[romajiIndex] != '*-') {
-            romajiString = `<size=${romajiSize}><pos=${romajiPos}><voffset=${h}>`
-                + trimSyllable(romajiArray[romajiIndex]).trim() + `</voffset>`;
-            romajiSkipped = false;
-        }
-        else
-            romajiSkipped = true;
-        retString += kanaString + romajiString + ' ';
-
-        romajiIndex++;
+        retString += ' ';
     }
-    //report erronous input
-    if(tooShort)
-        alert(`Missing ${tooShort} romaji word${tooShort > 1 ? 's' : ''}. Double check your inputs.`);
-    let tooMany = (romajiArray.length - romajiIndex)
-    if(tooMany > 0) {
-        tooMany = 0;
-        for(let i = romajiIndex; i < romajiArray.length; i++) {
-            if(romajiArray[i] != '|' && romajiArray[i].trim() != '') tooMany++;
-        }
-        if(tooMany > 0) alert(`Found ${tooMany} extra romaji word${tooMany > 1 ? 's' : ''}. Double check your inputs.`);
-    }
-
     retString = retString.trim();
     navigator.clipboard.writeText(retString);
     console.log(retString);
