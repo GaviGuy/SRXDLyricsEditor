@@ -121,7 +121,7 @@ function generatePreview () {
 
         aOffset += getWordWidth(trimSyllable(syl[i]), textSize);
         if(syl[i][syl[i].length-1] != '-') {
-            aOffset += textSize * 0.3;
+            aOffset += textSize * 0.2;
         }
     }
     
@@ -172,14 +172,14 @@ function generateLyricString() {
                         aOffset += getWordWidth(syl[i][j], textSize);
                 }
                 if(j == syl[i].length - 1 && syl[i][j] != '-' && syl[i][j] != '=')
-                    aOffset += 0.3 * textSize;
+                    aOffset += 0.2 * textSize;
             }
             retString += ' ';
         }
         else {
             aOffset += wordWidth;
             if(syl[i][syl[i].length - 1] != '-') {
-                aOffset += 0.3 * textSize;
+                aOffset += 0.2 * textSize;
             }
             retString += syl[i] + ' ';
         }

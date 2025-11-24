@@ -163,7 +163,7 @@ function calculateRomajiPositions(romajiArray, initialPos) {
                 aOffset += getWordWidth(trimSyllable(romajiArray[i]), romajiSize);
             }
             if(romajiArray[i][romajiArray[i].length - 1] != '-') {
-                aOffset += 0.3 * romajiSize;
+                aOffset += 0.2 * romajiSize;
             }
         }
     }

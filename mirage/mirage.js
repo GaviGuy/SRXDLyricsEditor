@@ -261,7 +261,7 @@ function buildStrings() {
                 
                 accumulatedOffset += getWordWidth(trimSyllable(newSyl), textSize);
                 if(newSyl[newSyl.length-1] != '-' && newSyl[newSyl.length-1] != '=') {
-                    accumulatedOffset += textSize * 0.3;
+                    accumulatedOffset += textSize * 0.2;
                     randoAngle = rando() * 2 * Math.PI;
                     randoDistance = rando();
                 }

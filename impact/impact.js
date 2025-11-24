@@ -163,8 +163,8 @@ function generatePreview() {
             wOffset += getWordWidth(trimSyllable(syl[i+j]), textSize);
             iOffset += getWordWidth(trimSyllable(syl[i+j]), impactSize);
             if(syl[i+j][syl[i+j].length-1] != '-') {
-                wOffset += 0.3 * textSize * spacingMult;
-                iOffset += 0.3 * impactSize * spacingMult;
+                wOffset += 0.2 * textSize * spacingMult;
+                iOffset += 0.2 * impactSize * spacingMult;
             }
         }
         aOffset += wOffset;
