@@ -230,8 +230,10 @@ function generateLyricString() {
 
     let prevType = -1;
     for(let i = 0; i < syllables.length; i += 2) {
-        let kx = Math.round(syllables[i].x),
-            px = Math.round(syllables[i+1].x);
+        let kx = Math.round(syllables[i].x);
+        let px;
+        if(syllables[i+1]) px = Math.round(syllables[i+1].x);
+        
         let poly = false;
         if(syllables[i+1]) poly = isPolyOnic(syllables[i+1].t);
         if(optimize == 0 || optimize == 1 && poly || prevType == -1) { //Don't optimize
