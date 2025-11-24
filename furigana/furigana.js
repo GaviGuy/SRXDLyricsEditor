@@ -113,6 +113,7 @@ function generateRomaji() {
 function generatePreview() {
     let previewElement = document.getElementById("preview");
     clearPreview(previewElement);
+    syllables = [];
 
     let japaneseString = document.getElementById("input-japanese").value;
 
