@@ -17,13 +17,13 @@ let optimize = defaultOptimize;
 let optimizeStrings = [
     [
         "Output string will always put kana before pronunciation.",
-        "Output string will alternate kana and pronunciations to reduce the number of tags, but only in mono-on syllables (eg. Ka or No, as opposed to Akira or Kai).",
+        "Output string will alternate kana and pronunciations to reduce the number of tags, but only in single-on words (eg. Ka or No, as opposed to Akira or Kai).",
         "Output string will always alternate kana and pronunciations regardless of word structure."
     ],
     [
         "Use this for maximum clarity and organization. (0% length reduction)",
-        "Use this if you intend to break up pronounced chunks post-generation. (~10% length reduction)",
-        "Use this if you do not intend to seperate into syllables. (~25% length reduction)"
+        "Use this if you intend to seperate pronunciations into syllables post-generation. (10% - 25% length reduction)",
+        "Use this if you do not intend to seperate into syllables. (25% length reduction)"
     ]
 ];
 
@@ -115,7 +115,7 @@ function generatePreview() {
     clearPreview(previewElement);
     syllables = [];
 
-    let japaneseString = document.getElementById("input-japanese").value;
+    let japaneseString = document.getElementById("input-japanese").value.trim();
 
     let romajiString = document.getElementById("input-romaji").value;
     let romajiArray = convertStringToSyllables(romajiString);
@@ -217,7 +217,7 @@ function isPolyOnic (string) {
 function generateLyricString() {
     let japaneseString = document.getElementById("input-japanese").value;
     let romajiString = convertStringToSyllables(document.getElementById("input-romaji").value);
-    let diff = japaneseString.length - romajiString.length;
+    let diff = japaneseString.trim().length - romajiString.length;
     if(diff > 0) {
         alert(`Missing ${diff} pronounced syllable${diff > 1 ? 's' : ''}. Double check your inputs.`)
     }
@@ -227,7 +227,7 @@ function generateLyricString() {
 
 
     generatePreview();
-    let retString = "@<line-height=0em><align=left>";
+    let retString = "@<line-height=0><align=left>";
 
     let prevType = -1;
     for(let i = 0; i < syllables.length; i += 2) {
