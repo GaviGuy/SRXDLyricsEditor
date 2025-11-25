@@ -44,7 +44,7 @@
                 <select onchange="readParameters(4)" name="optimization" id="input-optimize">
                     <option value=0>None</option>
                     <option value=1>Mono-On only</option>
-                    <option value=2>Full</option>
+                    <option value=2 selected>Full</option>
                 </select>
                 
                 <button onclick="generateLyricString()"
@@ -100,7 +100,7 @@
                     <button onClick="revertConfig(3)">default</button>
                 </div>
                 <div style="margin-left:145px">
-                    <input onchange="readParameters(4)" type="checkbox" checked = true
+                    <input onchange="readParameters(-1)" type="checkbox" checked = true
                     title="Render the romaji normally spaced instead of near their source kana"
                             id="config-romaji-mode">Centered romaji mode</input>
                 </div>
