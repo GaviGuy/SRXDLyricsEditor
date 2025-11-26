@@ -179,10 +179,9 @@ function generateLyricString() {
     buildStrings();
     let stillHasWords = true;
     let sylInd = 0;
-    let prevAlpha = alphas[0].toString(16);
-    let alphaExtra = "";
-    if(prevAlpha < 16) alphaExtra = '0';
-    let retString = `@<size=${textSize}><align=left><line-height=0><alpha=#${alphaExtra}${prevAlpha}>`;
+    let prevAlpha = alphas[0].toString(16).toUpperCase();
+    if(alphas[0] < 16) prevAlpha = '0' + prevAlpha;
+    let retString = `@<size=${textSize}><align=left><line-height=0><alpha=#${prevAlpha}>`;
     while(stillHasWords) {
         stillHasWords = false;
         for(let i = 0; i < syllables.length; i++) {
@@ -190,11 +189,11 @@ function generateLyricString() {
                 let xPos = Math.round(xPositions[i][sylInd]);
                 let yPos = -1 * Math.round(yPositions[i][sylInd])
 
-                let alpha = getAlphaByIndex(i).toString(16);
-                if(alpha < 16) alphaExtra = '0';
-                else alphaExtra = "";
+                let alpha = getAlphaByIndex(i);
+                if(alpha < 16) alpha = '0' + alpha.toString(16).toUpperCase();
+                else alpha = alpha.toString(16).toUpperCase();
 
-                if(alpha != prevAlpha) retString += `<alpha=#${alphaExtra}${alpha}>`;
+                if(alpha != prevAlpha) retString += `<alpha=#${alpha}>`;
                 prevAlpha = alpha;
 
                 retString += `<pos=${xPos}>`
