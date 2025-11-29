@@ -78,3 +78,12 @@ body {
     padding: 1rem;
     background: var(--color-bg-light);
 }
+
+.config-label {
+    display: inline-block;
+    width: 160px;
+}
+
+.config {
+    max-width: 100px;
+}

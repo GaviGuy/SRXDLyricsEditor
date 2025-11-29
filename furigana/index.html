@@ -76,33 +76,38 @@
         <div class="column-right">
             <div id="config">
                 <div>
+                    <label class="config-label" for="config-kana-spacing">Kana spacing</label>
                     <input onchange="readParameters(0)" type="number" value="12"
                     title="Spacing between the start of each kana"
-                            step=1 id="config-kana-spacing">Horizontal kana spacing</input>
+                            class="config" step=1 id="config-kana-spacing"></input>
                     <button onClick="revertConfig(0)">default</button>
                 </div>
                 <div>
+                    <label class="config-label" for="config-kana-size">Kana size</label>
                     <input onchange="readParameters(1)" type="number" value="12"
                     title="Font size of the kana line"
-                            step=1 id="config-kana-size">Kana size</input>
+                            class="config" step=1 id="config-kana-size"></input>
                     <button onClick="revertConfig(1)">default</button>
                 </div>
                 <div>
+                    <label class="config-label" for="config-romaji-size">Pronunce size</label>
                     <input onchange="readParameters(2)" type="number" value="8"
-                    title="Font size of the romaji line"
-                            step=1 id="config-romaji-size">Romaji size</input>
+                    title="Font size of the pronunciation line"
+                            class="config" step=1 id="config-romaji-size"></input>
                     <button onClick="revertConfig(2)">default</button>
                 </div>
                 <div>
+                    <label class="config-label" for="config-romaji-height">Pronunce height</label>
                     <input onchange="readParameters(3)" type="number" value="15"
-                    title="Vertical space between the kana and romaji lines"
-                            step=1 id="config-romaji-height">Romaji height</input>
+                    title="Vertical space between the kana and pronunciation lines"
+                            class="config" step=1 id="config-romaji-height"></input>
                     <button onClick="revertConfig(3)">default</button>
                 </div>
-                <div style="margin-left:145px">
+                <div>
+                    <label class="config-label" for="config-romaji-mode">Centered mode</label>
                     <input onchange="readParameters(-1)" type="checkbox" checked = true
                     title="Render the romaji normally spaced instead of near their source kana"
-                            id="config-romaji-mode">Centered romaji mode</input>
+                            id="config-romaji-mode"></input>
                 </div>
             </div>
             

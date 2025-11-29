@@ -36,39 +36,45 @@
         <div class="column-right">
             <div id="config">
                 <div>
+                    <label class="config-label" for="config-text-size">Text size</label>
                     <input onchange="readParameters(0)" type="number" value="10"
                             title="Text size"
-                            step=1 min=0 id="config-text-size">Text size</input>
+                            class="config" step=1 min=0 id="config-text-size"></input>
                     <button onClick="revertConfig(0)">default</button>
                 </div>
                 <div>
+                    <label class="config-label" for="config-impact-size">Impact text size</label>
                     <input onchange="readParameters(1)" type="number" value="12"
                             title="Impact text size"
-                            step=1 min=0 id="config-impact-size">Impact text size</input>
+                            class="config" step=1 min=0 id="config-impact-size"></input>
                     <button onClick="revertConfig(1)">default</button>
                 </div>
                 <div>
+                    <label class="config-label" for="config-vertical-spacing">Vertical spacing</label>
                     <input onchange="readParameters(2)" type="number" value="12"
                             title="Vertical space between each line"
-                            step=1 id="config-vertical-spacing">Vertical spacing</input>
+                            class="config" step=1 id="config-vertical-spacing"></input>
                     <button onClick="revertConfig(2)">default</button>
                 </div>
                 <div>
+                    <label class="config-label" for="config-impact-offset">Impact offset</label>
                     <input onchange="readParameters(3)" type="number" value="5"
                             title="At higher values, impact text is rendered further from the center of the phrase."
-                            step=1 id="config-impact-offset">Impact offset</input>
+                            class="config" step=1 id="config-impact-offset"></input>
                     <button onClick="revertConfig(3)">default</button>
                 </div>
                 <div>
+                    <label class="config-label" for="config-impact-opacity">Impact opacity</label>
                     <input onchange="readParameters(4)" type="number" value="40"
                             title="Opacity value of impact text"
-                            step=1 min=0 id="config-impact-opacity">Impact opacity</input>
+                            class="config" step=1 min=0 id="config-impact-opacity"></input>
                     <button onClick="revertConfig(4)">default</button>
                 </div>
                 <div>
+                    <label class="config-label" for="config-spacing-multiplier">Word spacing</label>
                     <input onchange="readParameters(5)" type="number" value="2"
                             title="Multiplier of the space between each word"
-                            step=0.1 id="config-spacing-multiplier">Word spacing</input>
+                            class="config" step=0.1 id="config-spacing-multiplier"></input>
                     <button onClick="revertConfig(5)">default</button>
                 </div>
             </div>

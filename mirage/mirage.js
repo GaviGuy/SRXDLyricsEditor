@@ -98,19 +98,29 @@ function addSourceContainer() {
 
     newElem.appendChild(document.createElement("br"));
 
+    let newLabel = newElem.appendChild(document.createElement("label"));
+    newLabel.classList.add("phrase-config");
+    newLabel.setAttribute("for", "count-input");
+    newLabel.textContent = "Count";
+
     let newCount = newElem.appendChild(document.createElement("input"));
     newCount.type = "number";
     newCount.setAttribute("onchange", "generatePreview()");
     newCount.value = 2;
-    newCount.textContent = "Count";
-    newCount.setAttribute("class", "count-input");
+    newCount.classList.add("config");
+    newCount.classList.add("count-input");
+
+    newLabel = newElem.appendChild(document.createElement("label"));
+    newLabel.classList.add("phrase-config");
+    newLabel.setAttribute("for", "alpha-input");
+    newLabel.textContent = "Opacity";
 
     let newAlpha = newElem.appendChild(document.createElement("input"));
     newAlpha.type = "number";
     newAlpha.setAttribute("onchange", "generatePreview()");
     newAlpha.value = 128;
-    newAlpha.textContent = "Alpha";
-    newAlpha.setAttribute("class", "alpha-input");
+    newAlpha.classList.add("config");
+    newAlpha.classList.add("alpha-input");
 }
 
 function readPhrases() {
@@ -125,7 +135,7 @@ function readPhrases() {
             else if(inputElems[i].children[j].classList.contains("count-input"))
                 counts[i] = Number(inputElems[i].children[j].value);
             else if(inputElems[i].children[j].classList.contains("alpha-input"))
-                alphas[i] = Number(inputElems[i].children[j].value); 
+                alphas[i] = Number(inputElems[i].children[j].value);
         }
     }
 }
@@ -136,31 +146,13 @@ function generatePreview () {
     buildStrings();
     clearPreview(previewElement);
 
-    // let x = [],
-    //     y = [],
-    //     s = [],
-    //     t = [],
-    //     a = [];
-    // let ind = 0;
-
     for(let i = 0; i < syllables.length; i++) {
         for(let j = 0; j < syllables[i].length; j++) {
             if(syllables[i]) {
                 appendToPreview(previewElement, xPositions[i][j], yPositions[i][j], textSize, syllables[i][j], getAlphaByIndex(i));
-                // x[ind] = Math.round(xPositions[i][j]);
-                // y[ind] = Math.round(yPositions[i][j]);
-                // s[ind] = Number(textSize);
-                // t[ind] = syllables[i][j];
-                // a[ind] = Number(alphas[0]);
-                // ind++;
             }
         }
     }
-    // console.log(x);
-    // console.log(y);
-    // console.log(s);
-    // console.log(t);
-    // console.log(a);
 }
 
 function getAlphaByIndex (index) {
@@ -172,7 +164,7 @@ function getAlphaByIndex (index) {
             count++;
         }
     }
-    console.log("error");
+    console.error("getAlphaByIndex() failed");
 }
 
 function generateLyricString() {

@@ -40,21 +40,24 @@
         <div class="column-right">
             <div id="config">
                 <div>
+                    <label class="config-label" for="config-top-size">Top text size</label>
                     <input onchange="readParameters(0)" type="number" value="10"
                             title="Top line text size"
-                            step=1 id="config-top-size">Top text size</input>
+                            class="config" step=1 id="config-top-size"></input>
                     <button onClick="revertConfig(0)">default</button>
                 </div>
                 <div>
+                    <label class="config-label" for="config-bottom-size">Bottom text size</label>
                     <input onchange="readParameters(1)" type="number" value="10"
                             title="Bottom line text size"
-                            step=1 id="config-bottom-size">Bottom text size</input>
+                            class="config" step=1 id="config-bottom-size"></input>
                     <button onClick="revertConfig(1)">default</button>
                 </div>
                 <div>
+                    <label class="config-label" for="config-vertical-spacing">Vertical spacing</label>
                     <input onchange="readParameters(2)" type="number" value="12"
                             title="Vertical space between each line"
-                            step=1 id="config-vertical-spacing">Vertical spacing</input>
+                            class="config" step=1 id="config-vertical-spacing"></input>
                     <button onClick="revertConfig(2)">default</button>
                 </div>
             </div>

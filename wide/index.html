@@ -37,23 +37,31 @@
         <div class="column-right">
             <div id="config">
                 <div>
-                    <input onchange="readParameters(0)" type="number" value="10" title="Text size"
-                            step=1 id="config-text-size">Text size</input>
+                    <label class="config-label" for="config-text-size">Text size</label>
+                    <input onchange="readParameters(0)" type="number" value="10"
+                            title="Text size"
+                            class="config" step=1 id="config-text-size"></input>
                     <button onClick="revertConfig(0)">default</button>
                 </div>
                 <div>
-                    <input onchange="readParameters(1)" type="number" value="12" title="Vertical space between each line"
-                            step=1 id="config-vertical-spacing">Vertical spacing</input>
+                    <label class="config-label" for="config-vertical-spacing">Vertical spacing</label>
+                    <input onchange="readParameters(1)" type="number" value="12"
+                            title="Vertical space between each line"
+                            class="config" step=1 id="config-vertical-spacing"></input>
                     <button onClick="revertConfig(1)">default</button>
                 </div>
                 <div>
-                    <input onchange="readParameters(2)" type="number" value="0" title="Horizontal shift of the phrase"
-                            step=1 id="config-x-offset">Horizontal offset</input>
+                    <label class="config-label" for="config-x-offset">Horizontal offset</label>
+                    <input onchange="readParameters(2)" type="number" value="0"
+                            title="Horizontal shift of the phrase"
+                            class="config" step=1 id="config-x-offset"></input>
                     <button onClick="revertConfig(2)">default</button>
                 </div>
                 <div>
-                    <input onchange="readParameters(3)" type="number" value="0" title="Vertical shift of the phrase"
-                            step=1 id="config-y-offset">Vertical offset</input>
+                    <label class="config-label" for="config-y-offset">Vertical offset</label>
+                    <input onchange="readParameters(3)" type="number" value="0"
+                            title="Vertical shift of the phrase"
+                            class="config" step=1 id="config-y-offset"></input>
                     <button onClick="revertConfig(3)">default</button>
                 </div>
             </div>

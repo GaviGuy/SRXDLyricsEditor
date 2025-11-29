@@ -39,33 +39,39 @@
         <div class="column-right">
             <div id="config">
                 <div>
+                    <label class="config-label" for="config-text-size">Text size</label>
                     <input onchange="readParameters(0)" type="number" value="10" title="Text size"
-                            step=1 id="config-text-size">Text size</input>
+                            class="config" step=1 id="config-text-size"></input>
                     <button onClick="revertConfig(0)">default</button>
                 </div>
                 <div>
+                    <label class="config-label" for="config-vertical-spacing">Vertical spacing</label>
                     <input onchange="readParameters(1)" type="number" value="12" title="Vertical space between each line"
-                            step=1 id="config-vertical-spacing">Vertical spacing</input>
+                            class="config" step=1 id="config-vertical-spacing"></input>
                     <button onClick="revertConfig(1)">default</button>
                 </div>
                 <div>
+                    <label class="config-label" for="config-shadow-x">Horizontal offset</label>
                     <input onchange="readParameters(2)" type="number" value="-1" title="Horizontal offset of the shadow"
-                            step=1 id="config-shadow-x">Horizontal offset</input>
+                            class="config" step=1 id="config-shadow-x"></input>
                     <button onClick="revertConfig(2)">default</button>
                 </div>
                 <div>
+                    <label class="config-label" for="config-shadow-y">Vertical offset</label>
                     <input onchange="readParameters(3)" type="number" value="-1" title="Vertical offset of the shadow"
-                            step=1 id="config-shadow-y">Vertical offset</input>
+                            class="config" step=1 id="config-shadow-y"></input>
                     <button onClick="revertConfig(3)">default</button>
                 </div>
                 <div>
+                    <label class="config-label" for="config-shadow-opacity">Shadow opacity</label>
                     <input onchange="readParameters(4)" type="number" value="221" title="Shadow opacity"
-                            step=1 id="config-shadow-opacity">Shadow opacity</input>
+                            class="config" step=1 id="config-shadow-opacity"></input>
                     <button onClick="revertConfig(4)">default</button>
                 </div>
                 <div>
+                    <label class="config-label" for="config-shadow-color">Shadow brightness</label>
                     <input onchange="readParameters(5)" type="number" value="0" title="Shadow color"
-                            step=1 id="config-shadow-color">Shadow color</input>
+                            class="config" step=1 id="config-shadow-color"></input>
                     <button onClick="revertConfig(5)">default</button>
                 </div>
             </div>

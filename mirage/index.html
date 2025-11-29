@@ -30,11 +30,12 @@
                 <div id="source-container">
                     <div class="phrase">
                         <textarea onchange="generatePreview()" cols=80
-                                title="Lyric phrase to display" class="phrase-input"></textarea><br>
-                        <input onchange="generatePreview()" value=2 type="number"
-                                title="Number of times to display the phrase" class="count-input">Count</input>
-                        <input onchange="generatePreview()" value=128 type="number"
-                                title="Opacity of this phrase" class="alpha-input">Opacity</input>
+                                title="Lyric phrase to display" class="phrase-input"></textarea>
+                        <br><label class="phrase-config" for="count-input">Count
+                        </label><input onchange="generatePreview()" value=2 type="number"
+                                title="Number of times to display the phrase" class="count-input config"></input><label class="phrase-config" for="alpha-input">Opacity
+                        </label><input onchange="generatePreview()" value=128 type="number"
+                                title="Opacity of this phrase" class="alpha-input config"></input>
                     </div>
                 </div>
                 <div class="util-container">
@@ -53,28 +54,33 @@
         <div class="column-right">
             <div id="config">
                 <div>
-                    <input onchange="readParameters(0)" type="number" value="8" title="Max horizontal distance to move each word"
-                            step=1 id="config-max-x">Max X displacement</input>
+                    <label class="config-label" for="config-max-x">Max X offset</label>
+                    <input onchange="readParameters(0)" type="number" value="5" title="Max horizontal distance to move each word"
+                            class="config" step=1 id="config-max-x"></input>
                     <button onClick="revertConfig(0)">default</button>
                 </div>
                 <div>
-                    <input onchange="readParameters(1)" type="number" value="8" title="Max vertical distance to move each word"
-                            step=1 id="config-max-y">Max Y displacement</input>
+                    <label class="config-label" for="config-max-y">Max Y offset</label>
+                    <input onchange="readParameters(1)" type="number" value="5" title="Max vertical distance to move each word"
+                            class="config" step=1 id="config-max-y"></input>
                     <button onClick="revertConfig(1)">default</button>
                 </div>
                 <div>
-                    <input onchange="readParameters(2)" type="number" value="12" title="Font size of each word (in pixels)"
-                            step=1 id="config-text-size">Text size</input>
+                    <label class="config-label" for="config-text-size">Text size</label>
+                    <input onchange="readParameters(2)" type="number" value="10" title="Font size of each word (in pixels)"
+                            class="config" step=1 id="config-text-size"></input>
                     <button onClick="revertConfig(2)">default</button>
                 </div>
                 <div>
+                    <label class="config-label" for="config-seed">RNG seed</label>
                     <input onchange="readParameters(3)" type="number" value="0" title="Seed to use when randomly distributing mirages"
-                            step=1 id="config-seed">RNG Seed</input>
+                            class="config" step=1 id="config-seed"></input>
                     <button onClick="revertConfig(3)">random</button>
                 </div>
-                <div style="margin-left:145px">
+                <div>
+                    <label class="config-label" for="config-gradual-mode">Gradual mode</label>
                     <input onchange="readParameters(4)" type="checkbox" value = false title="When checked, syllables are evented individually. When unchecked, syllables are evented in clusters."
-                            id="config-gradual-mode">Gradual syllable mode</input>
+                            id="config-gradual-mode"></input>
                 </div>
             </div>
             
@@ -88,9 +94,11 @@
                 </div>
             </div>
         </div>
+        
     </div>
-    <div>
-        <button onclick="document.location='..'">Back to index</button>
-    </div>
+    
+        <div>
+            <button onclick="document.location='..'">Back to index</button>
+        </div>
 </body>
 </html>
