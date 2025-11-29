@@ -19,6 +19,7 @@ body {
     user-select: text;
     color: var(--color-main);
     background: var(--color-bg);
+    overflow-x: hidden;
 }
 
 .main {

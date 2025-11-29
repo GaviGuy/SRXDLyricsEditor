@@ -17,16 +17,48 @@ function appendToPreview(previewElement, posX, posY, size, text, alpha) {
     newElement.textContent = text;
 }
 
+function toColorString (c, a) {
+    if(!a && a != 0 || a > 255) a = 255;
+    if(a < 0) a = 0;
+    if(!c && c != 0 || c > 255) c = 255;
+    if(c < 0) c = 0;
+    let cStr = c.toString(16);
+    if(c < 16) cStr = "0" + cStr;
+    let aStr = a.toString(16);
+    if(a < 16) aStr = "0" + aStr;
+    let ret = "#" + cStr + cStr + cStr + aStr;
+    return ret;
+}
+
+function toColorString2 (c, a) {
+    if(!a && a != 0 || a > 255) a = 255;
+    if(a < 0) a = 0;
+    if(!c && c != 0 || c > 255) c = 255;
+    if(c < 0) c = 0;
+    a = Math.floor(a/16);
+    c = Math.floor(c/16);
+    let aStr = a.toString(16);
+    let cStr = c.toString(16);
+    let ret = "#" + cStr + cStr + cStr + aStr;
+    return ret.toUpperCase();
+}
+
 function appendToPreview2(previewElement, obj) {
     if(!obj) return;
     if(!(obj.a) && obj.a != 0 || (obj.a) > 255) obj.a = 255;
     if((obj.a) < 0) obj.a = 0;
-    let str = Number(obj.a).toString(16);
-    if((obj.a) < 16) str = '0' + str;
+    if(!(obj.c) && obj.c != 0) obj.c = 255;
+    if(obj.c > 255) obj.c = 255;
+    if(obj.c < 0) obj.c = 0;
+    let aStr = Number(obj.a).toString(16);
+    let cStr = Number(obj.c).toString(16);
+    if((obj.c) < 16) cStr = '0' + cStr;
+    cStr = '#' + cStr + cStr + cStr
+    if((obj.a) < 16) aStr = '0' + aStr;
     let newElement = previewElement.appendChild(document.createElement("p"));
     newElement.style = `font-weight: 800; position: absolute;`
                     + `left: ${2*(obj.x)}px; top: ${60+2*(obj.y - obj.s * 1.2)}px; font-size:${2*(obj.s)}px;`
-                    + `color: #FFFFFF${str};`;
+                    + `color: ${cStr + aStr};`;
     newElement.textContent = obj.t;
 }
 

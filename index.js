@@ -90,6 +90,104 @@ let impact = [
     "a": 255
   }
 ];
+let shadow = [
+  {
+    "x": 25,
+    "y": -2,
+    "s": 12,
+    "t": "\"It's",
+    "a": 255,
+    "c": 100
+  },
+  {
+    "x": 25,
+    "y": 0,
+    "t": "\"It's",
+    "s": 12,
+    "a": 255,
+    "c": 255
+  },
+  {
+    "x": 51,
+    "y": -2,
+    "s": 12,
+    "t": "all",
+    "a": 255,
+    "c": 100
+  },
+  {
+    "x": 51,
+    "y": 0,
+    "t": "all",
+    "s": 12,
+    "a": 255,
+    "c": 255
+  },
+  {
+    "x": 68,
+    "y": -2,
+    "s": 12,
+    "t": "the",
+    "a": 255,
+    "c": 100
+  },
+  {
+    "x": 68,
+    "y": 0,
+    "t": "the",
+    "s": 12,
+    "a": 255,
+    "c": 255
+  },
+  {
+    "x": 93,
+    "y": -2,
+    "s": 12,
+    "t": "same\"",
+    "a": 255,
+    "c": 100
+  },
+  {
+    "x": 93,
+    "y": 0,
+    "t": "same\"",
+    "s": 12,
+    "a": 255,
+    "c": 255
+  },
+  {
+    "x": 56,
+    "y": 13,
+    "s": 12,
+    "t": "you",
+    "a": 100,
+    "c": 100
+  },
+  {
+    "x": 56,
+    "y": 15,
+    "t": "you",
+    "s": 12,
+    "a": 255,
+    "c": 255
+  },
+  {
+    "x": 82,
+    "y": 13,
+    "s": 12,
+    "t": "say",
+    "a": 100,
+    "c": 100
+  },
+  {
+    "x": 82,
+    "y": 15,
+    "t": "say",
+    "s": 12,
+    "a": 255,
+    "c": 255
+  }
+]
 
 let previews = [
     {
@@ -115,8 +213,14 @@ let previews = [
     {
         title: "Impact",
         link: "impact",
-        description: "Render a phrase layered over a shadow of itself.",
+        description: "Render a phrase layered over a ghost of itself.",
         syllables: impact
+    },
+    {
+        title: "Shadow",
+        link: "shadow",
+        description: "Render text with a customizable drop shadow.",
+        syllables: shadow
     },
     {
         title: "Parallel",
