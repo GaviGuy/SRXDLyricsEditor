@@ -136,7 +136,7 @@ function generatePreview () {
 
         aOffset += getWordWidth(trimSyllable(syl[i]), textSize);
         if(syl[i][syl[i].length-1] != '-') {
-            aOffset += textSize * 0.2;
+            aOffset += textSize * 0.25;
         }
     }
 }

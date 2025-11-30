@@ -99,7 +99,7 @@ function generatePreview() {
             let xPos = Math.round(startX1 + aOffset1);
             aOffset1 += getWordWidth(trimSyllable(syl1[ind]), topTextSize);
             if(syl1[ind][syl1[ind].length-1] != '-')
-                aOffset1 += topTextSize * 0.2;
+                aOffset1 += topTextSize * 0.25;
             
             syllables1[ind] = {
                 x: xPos,
@@ -114,7 +114,7 @@ function generatePreview() {
             let xPos = Math.round(startX2 + aOffset2);
             aOffset2 += getWordWidth(trimSyllable(syl2[ind]), bottomTextSize);
             if(syl2[ind][syl2[ind].length-1] != '-')
-                aOffset2 += bottomTextSize * 0.2;
+                aOffset2 += bottomTextSize * 0.25;
             
             syllables2[ind] = {
                 x: xPos,

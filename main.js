@@ -43,7 +43,7 @@ function toColorString2 (c, a) {
     return ret.toUpperCase();
 }
 
-function appendToPreview2(previewElement, obj) {
+function appendToPreview2(previewElement, obj, trim) {
     if(!obj) return;
     if(!(obj.a) && obj.a != 0 || (obj.a) > 255) obj.a = 255;
     if((obj.a) < 0) obj.a = 0;
@@ -59,7 +59,8 @@ function appendToPreview2(previewElement, obj) {
     newElement.style = `font-weight: 800; position: absolute;`
                     + `left: ${2*(obj.x)}px; top: ${60+2*(obj.y - obj.s * 1.2)}px; font-size:${2*(obj.s)}px;`
                     + `color: ${cStr + aStr};`;
-    newElement.textContent = obj.t;
+    if(trim) newElement.textContent = trimSyllable(obj.t).trim();
+    else newElement.textContent = obj.t;
 }
 
 function clearPreview(previewElement) {
@@ -109,7 +110,7 @@ function getLineStartingPositions (sylArray, textSize, spaceMult) {
             positions[newlinesCount] = getWordWidth(str.trim(), textSize);
 
             let numSpaces = str.split(' ').length - 1;
-            positions[newlinesCount] += numSpaces * 0.2 * (spaceMult - 1) * textSize;
+            positions[newlinesCount] += numSpaces * 0.25 * (spaceMult - 1) * textSize;
 
             positions[newlinesCount] = 80 - positions[newlinesCount] / 2;
             str = "";

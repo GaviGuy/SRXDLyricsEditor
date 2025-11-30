@@ -11,6 +11,8 @@ let yOffset = defaultYOffset;
 let startPos = [];
 let newlinesCount = 0;
 
+let syllables = [];
+
 async function init() {
     readParameters(0);
     readParameters(1);
@@ -75,61 +77,33 @@ function generatePreview () {
 
     let str = document.getElementById("input").value;
     let syl = convertStringToSyllables(str);
-
-    // let x = [],
-    //     y = [],
-    //     s = [],
-    //     t = [],
-    //     a = [];
-    // let buildInd = 0;
+    syllables = [];
     
-    str = "";
-    startPos = [0];
-    newlinesCount = 0;
-    for(let i = 0; i < syl.length; i++) {
-        if(syl[i] != "\\n") {
-            str += trimSyllable(syl[i]);
-        }
-        if(syl[i] == "\\n" || i == syl.length - 1) {
-            startPos[newlinesCount] = getWordWidth(str, textSize);
-            str = "";
-            newlinesCount++;
-        }
-    }
-    for (let i = 0; i < startPos.length; i++) {
-        startPos[i] = 80 + Number(xOffset) - startPos[i] / 2;
-    }
+    startPos = getLineStartingPositions(syl, textSize);
 
     let numNewlines = 0;
     let aOffset = 0;
+    let sInd = 0;
     for(let i = 0; i < syl.length; i++) {
         while(syl[i] == "\\n") {
             numNewlines++;
             i++
             aOffset = 0;
         }
-        let xPos = Number(startPos[numNewlines]) + aOffset;
-        let yPos = Number(verticalGap * (numNewlines - newlinesCount / 2));
-        appendToPreview(previewElement, xPos, 30 + yPos + yOffset, textSize, trimSyllable(syl[i]), 255);
-        
-        // x[buildInd] = Math.round(xPos);
-        // y[buildInd] = Math.round(30 + yPos + yOffset);
-        // s[buildInd] = Number(textSize);
-        // t[buildInd] = trimSyllable(syl[i]);
-        // a[buildInd] = Number(255);
-        // buildInd++;
+        syllables[sInd] = {
+            x: Number(startPos[numNewlines]) + aOffset + xOffset,
+            y: Number(verticalGap * numNewlines + yOffset),
+            s: textSize,
+            t: syl[i]
+        }
+        appendToPreview2(previewElement, syllables[sInd], true);
+        sInd++;
 
         aOffset += getWordWidth(trimSyllable(syl[i]), textSize);
         if(syl[i][syl[i].length-1] != '-') {
-            aOffset += textSize * 0.2;
+            aOffset += textSize * 0.2 + 1;
         }
     }
-    
-    // console.log(x);
-    // console.log(y);
-    // console.log(s);
-    // console.log(t);
-    // console.log(a);
 }
 
 function generateLyricString() {
@@ -139,54 +113,46 @@ function generateLyricString() {
     let numNewlines = 0;
     let aOffset = 0;
     let retString = `@<size=${textSize}><align=left><line-height=0>`
-            + `<voffset=${Math.round(verticalGap * (newlinesCount / 2))}><pos=${startPos[numNewlines]}>`;
+            + `<pos=${startPos[numNewlines]}>`;
 
-    for(let i = 0; i < syl.length; i++) {
-        while(syl[i] == "\\n") {
-            numNewlines++;
-            i++;
-            retString += `<voffset=${Math.round(verticalGap * -(numNewlines - (newlinesCount / 2)))}>`
-                    + `<pos=${Math.round(startPos[numNewlines])}>`;
-            aOffset = 0;
+
+    let prevY = 0;
+    let trailingHyphen = false;
+    for(let i = 0; i < syllables.length; i++) {
+        if(syllables[i].y != prevY) {
+            retString += `<voffset=${-(syllables[i].y)}>`
+                    + `<pos=${syllables[i].x}>`;
+            prevY = syllables[i].y;
         }
-        let wordWidth = getWordWidth(trimSyllable(syl[i]), textSize);
-        console.log("numNewlines: " + numNewlines + ", startPos: " + startPos[numNewlines]);
-
-        let pos = startPos[numNewlines] + wordWidth + aOffset + textSize;
-        if(pos > 160 || startPos[numNewlines] < -160) {
-            for(let j = 0; j < syl[i].length; j++) {
-                switch(syl[i][j]) {
-                    case '-':
-                        if(j == syl[i].length-1) {
-                            retString += syl[i][j];
-                            break;
-                        }
-                    case '=':
-                        if(j == syl[i].length-1) {
-                            retString += `<pos=${Math.round(startPos[numNewlines] + aOffset)}>${syl[i][j]}`;
-                            aOffset += getWordWidth('-', textSize);
-                            break;
-                        }
-                    default:
-                        retString += `<pos=${Math.round(startPos[numNewlines] + aOffset)}>${syl[i][j]}`
-                        aOffset += getWordWidth(syl[i][j], textSize);
-                }
-                if(j == syl[i].length - 1 && syl[i][j] != '-' && syl[i][j] != '=')
-                    aOffset += 0.2 * textSize;
+        let trimSyl = trimSyllable(syllables[i].t).trim();
+        let sylWidth = getWordWidth(syllables[i].t);
+        if(syllables[i].x + sylWidth > 155 || syllables[i].x < -160) {
+            if(trailingHyphen) {
+                retString = retString.substring(0, retString.length - 2) + ' ';
+                trailingHyphen = false;
+            }
+            let wOffset = 0;
+            for(let j = 0; j < trimSyl.length; j++) {
+                let x = Math.round(syllables[i].x + wOffset);
+                retString += `<pos=${x}>${trimSyl[j]}`;
+                wOffset += getWordWidth(trimSyl[j], textSize);
             }
             retString += ' ';
         }
         else {
-            aOffset += wordWidth;
-            if(syl[i][syl[i].length - 1] != '-') {
-                aOffset += 0.2 * textSize;
-            }
-            retString += syl[i] + ' ';
+            retString += syllables[i].t + ' ';
+            if(syllables[i].t[syllables[i].t.length - 1] == '-') trailingHyphen = true;
+            else trailingHyphen = false;
         }
+
     }
     retString = retString.trim();
-    retString += `<voffset=${-verticalGap * newlinesCount / 2 - yOffset}><alpha=#00>.`
-    
+    if(yOffset > 0) {
+        retString += `<alpha=#00><voffset=${-yOffset}>.`
+    }
+    else if (yOffset < 0) {
+        retString += `<alpha=#00><voffset=${-yOffset}>.`
+    }
     retString = retString.trim();
     navigator.clipboard.writeText(retString);
     console.log(retString);
