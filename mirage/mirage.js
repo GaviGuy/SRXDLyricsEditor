@@ -1,6 +1,7 @@
 let strings = [];
 let counts = [];
 let alphas = [];
+let spreads = [];
 let seed = 0;
 
 let syllables = [];
@@ -121,6 +122,17 @@ function addSourceContainer() {
     newAlpha.value = 128;
     newAlpha.classList.add("config");
     newAlpha.classList.add("alpha-input");
+
+    newLabel = newElem.appendChild(document.createElement("label"));
+    newLabel.classList.add("phrase-config");
+    newLabel.setAttribute("for", "spread-input");
+    newLabel.textContent = "Spread";
+
+    let newCheck = newElem.appendChild(document.createElement("input"));
+    newCheck.type = "checkbox";
+    newCheck.setAttribute("onchange", "generatePreview()");
+    newCheck.checked = true;
+    newCheck.classList.add("spread-input");
 }
 
 function readPhrases() {
@@ -128,6 +140,7 @@ function readPhrases() {
     strings = [];
     counts = [];
     alphas = [];
+    spreads = [];
     for(let i = 0; i < inputElems.length; i++) {
         for(let j = 0; j < inputElems[i].children.length; j++) {
             if(inputElems[i].children[j].classList.contains("phrase-input"))
@@ -136,6 +149,8 @@ function readPhrases() {
                 counts[i] = Number(inputElems[i].children[j].value);
             else if(inputElems[i].children[j].classList.contains("alpha-input"))
                 alphas[i] = Number(inputElems[i].children[j].value);
+            else if(inputElems[i].children[j].classList.contains("spread-input"))
+                spreads[i] = inputElems[i].children[j].checked;
         }
     }
 }
@@ -247,8 +262,13 @@ function buildStrings() {
                 let newSyl = syl[j + numNewlines]
 
                 syllables[i][j] = trimSyllable(newSyl);
-                xPositions[i][j] = startPos[numNewlines] + accumulatedOffset + Math.cos(randoAngle) * randoDistance * maxX;
-                yPositions[i][j] = yPos + Math.sin(randoAngle) * randoDistance * maxY;
+                xPositions[i][j] = startPos[numNewlines] + accumulatedOffset
+                yPositions[i][j] = yPos;
+
+                if(spreads[pInd]) {
+                    xPositions[i][j] += Math.cos(randoAngle) * randoDistance * maxX;
+                    yPositions[i][j] += Math.sin(randoAngle) * randoDistance * maxY;
+                }
                 
                 accumulatedOffset += getWordWidth(trimSyllable(newSyl), textSize);
                 if(newSyl[newSyl.length-1] != '-' && newSyl[newSyl.length-1] != '=') {
