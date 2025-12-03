@@ -34,19 +34,25 @@ async function init() {
 init();
 
 function readParameters (index) {
-    let element;
+    let element, val;
     switch(index) {
         case 0:
             element = document.getElementById("config-max-x");
-            maxX = Number(element.value);
+            val = validateNumber(element.value);
+            if(val == val) maxX = val;
+            element.value = maxY;
             break;
         case 1:
             element = document.getElementById("config-max-y");
-            maxY = Number(element.value);
+            val = validateNumber(element.value);
+            if(val == val) maxY = val;
+            element.value = maxY;
             break;
         case 2:
             element = document.getElementById("config-text-size");
-            textSize = Number(element.value);
+            val = validateNumber(element.value, 0);
+            if(val == val) textSize = val;
+            element.value = textSize;
             break;
         case 3:
             element = document.getElementById("config-seed");

@@ -23,15 +23,21 @@ function readParameters (index) {
     switch(index) {
         case 0:
             element = document.getElementById("config-top-size");
-            topTextSize = Number(element.value);
+            val = validateNumber(element.value, 0);
+            if(val == val) topTextSize = val;
+            element.value = topTextSize;
             break;
         case 1:
             element = document.getElementById("config-bottom-size");
-            bottomTextSize = Number(element.value);
+            val = validateNumber(element.value, 0);
+            if(val == val) bottomTextSize = val;
+            element.value = bottomTextSize;
             break;
         case 2:
             element = document.getElementById("config-vertical-spacing");
-            verticalGap = Number(element.value);
+            val = validateNumber(element.value);
+            if(val == val) verticalGap = val;
+            element.value = verticalGap;
             break;
     }
     generatePreview();

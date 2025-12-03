@@ -43,19 +43,27 @@ function readParameters (index) {
     switch(index) {
         case 0:
             element = document.getElementById("config-kana-spacing");
-            kanaSpacing = Number(element.value);
+            val = validateNumber(element.value, 0);
+            if(val == val) kanaSpacing = val;
+            element.value = kanaSpacing;
             break;
         case 1:
             element = document.getElementById("config-kana-size");
-            kanaSize = Number(element.value);
+            val = validateNumber(element.value, 0);
+            if(val == val) kanaSize = val;
+            element.value = kanaSize;
             break;
         case 2:
             element = document.getElementById("config-romaji-size");
-            romajiSize = Number(element.value);
+            val = validateNumber(element.value);
+            if(val == val) romajiSize = val;
+            element.value = romajiSize;
             break;
         case 3:
             element = document.getElementById("config-romaji-height");
-            romajiHeight = Number(element.value);
+            val = validateNumber(element.value);
+            if(val == val) romajiHeight = val;
+            element.value = romajiHeight;
             break;
         case 4:
             element = document.getElementById("input-optimize");

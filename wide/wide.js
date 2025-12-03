@@ -22,23 +22,31 @@ async function init() {
 init();
 
 function readParameters (index) {
-    let element;
+    let element, val;
     switch(index) {
         case 0:
             element = document.getElementById("config-text-size");
-            textSize = Number(element.value);
+            val = validateNumber(element.value, 0);
+            if(val == val) textSize = val;
+            element.value = textSize;
             break;
         case 1:
             element = document.getElementById("config-vertical-spacing");
-            verticalGap = Number(element.value);
+            val = validateNumber(element.value);
+            if(val == val) verticalGap = val;
+            element.value = verticalGap;
             break;
         case 2:
             element = document.getElementById("config-x-offset");
-            xOffset = Number(element.value);
+            val = validateNumber(element.value);
+            if(val == val) xOffset = val;
+            element.value = xOffset;
             break;
         case 3:
             element = document.getElementById("config-y-offset");
-            yOffset = Number(element.value);
+            val = validateNumber(element.value);
+            if(val == val) yOffset = val;
+            element.value = yOffset;
             break;
     }
     generatePreview();

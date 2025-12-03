@@ -7,6 +7,15 @@ function getWordWidth (word, fontSize) {
     return elem.clientWidth;
 }
 
+function validateNumber(num, min, max) {
+    if(num == "") return NaN;
+    num = Number(num);
+    if(num != num) return num;
+    if((min || min == 0) && num < min) return min;
+    if((max || max == 0) && num > max) return max;
+    return num;
+}
+
 function getLastChar(str) {
     return str[str.length - 1]
 }

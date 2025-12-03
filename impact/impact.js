@@ -30,31 +30,33 @@ function readParameters (index) {
     switch(index) {
         case 0:
             element = document.getElementById("config-text-size");
-            textSize = Number(element.value);
+            val = validateNumber(element.value, 0);
+            if(val == val) textSize = val;
+            element.value = textSize;
             break;
         case 1:
             element = document.getElementById("config-impact-size");
-            impactSize = Number(element.value);
+            val = validateNumber(element.value, 0);
+            if(val == val) impactSize = val;
+            element.value = impactSize;
             break;
         case 2:
             element = document.getElementById("config-vertical-spacing");
-            verticalGap = Number(element.value);
+            val = validateNumber(element.value);
+            if(val == val) verticalGap = val;
+            element.value = verticalGap;
             break;
         case 3:
             element = document.getElementById("config-impact-offset");
-            impactOffset = Number(element.value);
+            val = validateNumber(element.value);
+            if(val == val) impactOffset = val;
+            element.value = impactOffset;
             break;
         case 4:
             element = document.getElementById("config-impact-opacity");
-            impactOpacity = Number(element.value);
-            if(impactOpacity > 255) {
-                impactOpacity = 255;
-                element.value = 255;
-            }
-            if(!impactOpacity || impactOpacity < 0) {
-                impactOpacity = 0;
-                element.value = 0;
-            }
+            val = validateNumber(element.value, 0, 255);
+            if(val == val) impactOpacity = val;
+            element.value = impactOpacity;
             break;
         case 5:
             element = document.getElementById("config-spacing-multiplier");

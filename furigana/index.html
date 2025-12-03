@@ -83,14 +83,14 @@
                     <label class="config-label" for="config-kana-size">Kana size</label>
                     <input onchange="readParameters(1)" type="number" value="12"
                     title="Font size of the kana line"
-                            class="config" step=1 id="config-kana-size"></input>
+                            class="config" step=1 min=0 id="config-kana-size"></input>
                     <button onClick="revertConfig(1)">default</button>
                 </div>
                 <div>
                     <label class="config-label" for="config-romaji-size">Pronunce size</label>
                     <input onchange="readParameters(2)" type="number" value="8"
                     title="Font size of the pronunciation line"
-                            class="config" step=1 id="config-romaji-size"></input>
+                            class="config" step=1 min=0 id="config-romaji-size"></input>
                     <button onClick="revertConfig(2)">default</button>
                 </div>
                 <div>

@@ -70,13 +70,13 @@
                 <div>
                     <label class="config-label" for="config-text-size">Text size</label>
                     <input onchange="readParameters(2)" type="number" value="10" title="Font size of each word (in pixels)"
-                            class="config" step=1 id="config-text-size"></input>
+                            class="config" step=1 min=0 id="config-text-size"></input>
                     <button onClick="revertConfig(2)">default</button>
                 </div>
                 <div>
                     <label class="config-label" for="config-seed">RNG seed</label>
                     <input onchange="readParameters(3)" value="0" title="Seed to use when randomly distributing mirages"
-                            class="config" step=1 id="config-seed"></input>
+                            class="config" id="config-seed"></input>
                     <button onClick="revertConfig(3)">random</button>
                 </div>
                 <div>

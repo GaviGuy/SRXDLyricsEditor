@@ -28,47 +28,43 @@ async function init() {
 init();
 
 function readParameters (index) {
-    let element;
+    let element, val;
     switch(index) {
         case 0:
             element = document.getElementById("config-text-size");
-            textSize = Number(element.value);
+            val = validateNumber(element.value, 0);
+            if(val == val) textSize = val;
+            element.value = textSize;
             break;
         case 1:
             element = document.getElementById("config-vertical-spacing");
-            verticalGap = Number(element.value);
+            val = validateNumber(element.value);
+            if(val == val) verticalGap = val;
+            element.value = verticalGap;
             break;
         case 2:
             element = document.getElementById("config-shadow-x");
-            xOffset = Number(element.value);
+            val = validateNumber(element.value);
+            if(val == val) xOffset = val;
+            element.value = xOffset;
             break;
         case 3:
             element = document.getElementById("config-shadow-y");
-            yOffset = Number(element.value);
+            val = validateNumber(element.value);
+            if(val == val) yOffset = val;
+            element.value = yOffset;
             break;
         case 4:
             element = document.getElementById("config-shadow-opacity");
-            opacity = Number(element.value);
-            if(opacity > 255) {
-                opacity = 255;
-                element.value = 255;
-            }
-            if(!opacity || opacity < 0) {
-                opacity = 0;
-                element.value = 0;
-            }
+            val = validateNumber(element.value, 0, 255);
+            if(val == val) opacity = val;
+            element.value = opacity;
             break;
         case 5:
             element = document.getElementById("config-shadow-color");
-            color = Number(element.value);
-            if(color > 255) {
-                color = 255;
-                element.value = 255;
-            }
-            if(!color || color < 0) {
-                color = 0;
-                element.value = 0;
-            }
+            val = validateNumber(element.value, 0, 255);
+            if(val == val) color = val;
+            element.value = color;
             break;
     }
     generatePreview();
