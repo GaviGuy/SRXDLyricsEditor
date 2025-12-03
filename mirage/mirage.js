@@ -26,8 +26,8 @@ async function init() {
     readParameters(0);
     readParameters(1);
     readParameters(2);
+    readParameters(3);
     readParameters(4);
-    revertConfig(3);
 }
 init();
 
@@ -48,7 +48,8 @@ function readParameters (index) {
             break;
         case 3:
             element = document.getElementById("config-seed");
-            seed = Number(element.value);
+            if(!element.value) revertConfig(3);
+            else seed = element.value;
             break;
         case 4:
             element = document.getElementById("config-gradual-mode");
@@ -220,6 +221,14 @@ function generateLyricString() {
 
 function buildStrings() {
     let rando = Math.seed(seed);
+    if(seed != 0 && !Number(seed)) {
+        let hash = 0;
+        for(let i = 0; i < seed.length; i++) {
+            hash += seed.charCodeAt(i)
+            hash *= 7;
+        }
+        rando = Math.seed(hash);
+    }
     syllables = [];
     xPositions = [];
     yPositions = [];
@@ -281,8 +290,3 @@ function buildStrings() {
         prevP += counts[pInd];
     }
 }
-
-// function rerollSeed() {
-//     seed = Math.random() * 4294967296;
-//     generatePreview();
-// }
