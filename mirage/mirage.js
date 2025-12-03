@@ -144,41 +144,42 @@ function addSourceContainer() {
     newCheck.setAttribute("onchange", "generatePreview()");
     newCheck.checked = true;
     newCheck.classList.add("spread-input");
+
+    readPhrases();
 }
 
 function readPhrases() {
     let inputElems = document.getElementById("source-container").children;
     strings = [];
-    counts = [];
-    alphas = [];
     spreads = [];
+    let newAlphas = [], newCounts = [];
     for(let i = 0; i < inputElems.length; i++) {
         for(let j = 0; j < inputElems[i].children.length; j++) {
             let val = inputElems[i].children[j].value;
             if(inputElems[i].children[j].classList.contains("phrase-input"))
                 strings[i] = val;
             else if(inputElems[i].children[j].classList.contains("count-input")) {
-                if(Number(val) < 0) {
-                    val = 0;
-                    inputElems[i].children[j].value = 0;
+                val = validateNumber(val, 0);
+                if(val == val) {
+                    newCounts[i] = val;
+                    inputElems[i].children[j].value = val;
                 }
-                counts[i] = Number(val);
+                else inputElems[i].children[j].value = counts[i];
             }
             else if(inputElems[i].children[j].classList.contains("alpha-input")) {
-                if(Number(val) > 255) {
-                    val = 255;
-                    inputElems[i].children[j].value = 255;
+                val = validateNumber(val, 0, 255);
+                if(val == val) {
+                    newAlphas[i] = val;
+                    inputElems[i].children[j].value = val;
                 }
-                if(!Number(val)) {
-                    val = 0;
-                    inputElems[i].children[j].value = 0;
-                }
-                alphas[i] = Number(val);
+                else inputElems[i].children[j].value = alphas[i];
             }
             else if(inputElems[i].children[j].classList.contains("spread-input"))
                 spreads[i] = inputElems[i].children[j].checked;
         }
     }
+    counts = newCounts;
+    alphas = newAlphas;
 }
 
 function generatePreview () {

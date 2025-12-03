@@ -241,7 +241,7 @@ function calculateRomajiWordWidth(arr, startInd, endInd) {
 
 function calculateRomajiWordLength(arr, startInd) {
     for(let i = startInd; i < arr.length; i++) {
-        let last = arr[i][arr[i].length-1];
+        let last = getLastChar(arr[i]);
         if (!(last == '-' || last == '=')) return i - startInd + 1;
     }
     return arr.length-startInd;

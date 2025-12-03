@@ -125,12 +125,12 @@ function generatePreview() {
 
         let wordWidth = getWordWidth(trimSyllable(syl[i]), textSize);
         let impactWidth = getWordWidth(trimSyllable(syl[i]), impactSize);
-        let last = syl[i][syl[i].length-1];
+        let last = getLastChar(syl[i]);
         let wordLen = 1;
         while((i + wordLen) < syl.length && last == '-' || last == '=') {
             wordWidth += getWordWidth(trimSyllable(syl[i + wordLen]), textSize);
             impactWidth += getWordWidth(trimSyllable(syl[i + wordLen]), impactSize);
-            last = syl[i+wordLen][syl[i+wordLen].length-1];
+            last = getLastChar(syl[i+wordLen]);
             wordLen++;
         }
 

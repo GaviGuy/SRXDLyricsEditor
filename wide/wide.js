@@ -155,11 +155,8 @@ function generateLyricString() {
 
     }
     retString = retString.trim();
-    if(yOffset > 0) {
-        retString += `<alpha=#00><voffset=${-yOffset}>.`
-    }
-    else if (yOffset < 0) {
-        retString += `<alpha=#00><voffset=${-yOffset}>.`
+    if(yOffset != 0) {
+        retString += `<alpha=#00><voffset=${-2 * yOffset}>.`
     }
     retString = retString.trim();
     navigator.clipboard.writeText(retString);
