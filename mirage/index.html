@@ -32,9 +32,9 @@
                         <textarea onchange="generatePreview()" cols=80
                                 title="Lyric phrase to display" class="phrase-input"></textarea>
                         <br><label class="phrase-config" for="count-input">Count
-                        </label><input onchange="generatePreview()" value=2 type="number"
+                        </label><input onchange="generatePreview()" value=2 min=0 type="number"
                                 title="Number of times to display the phrase" class="count-input config"></input><label class="phrase-config" for="alpha-input">Opacity
-                        </label><input onchange="generatePreview()" value=128 type="number"
+                        </label><input onchange="generatePreview()" value=128 min=0 max=255 type="number"
                                 title="Phrase opacity (0 to 255)" class="alpha-input config"></input><label class="phrase-config" for="spread-input">Spread
                         </label><input onchange="generatePreview()" checked="true" type="checkbox"
                                 title="Whether to randomly spread this phrase" class="spread-input config"></input>
@@ -75,7 +75,7 @@
                 </div>
                 <div>
                     <label class="config-label" for="config-seed">RNG seed</label>
-                    <input onchange="readParameters(3)" type="number" value="0" title="Seed to use when randomly distributing mirages"
+                    <input onchange="readParameters(3)" value="0" title="Seed to use when randomly distributing mirages"
                             class="config" step=1 id="config-seed"></input>
                     <button onClick="revertConfig(3)">random</button>
                 </div>

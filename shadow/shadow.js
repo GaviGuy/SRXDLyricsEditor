@@ -49,10 +49,26 @@ function readParameters (index) {
         case 4:
             element = document.getElementById("config-shadow-opacity");
             opacity = Number(element.value);
+            if(opacity > 255) {
+                opacity = 255;
+                element.value = 255;
+            }
+            if(!opacity || opacity < 0) {
+                opacity = 0;
+                element.value = 0;
+            }
             break;
         case 5:
             element = document.getElementById("config-shadow-color");
             color = Number(element.value);
+            if(color > 255) {
+                color = 255;
+                element.value = 255;
+            }
+            if(!color || color < 0) {
+                color = 0;
+                element.value = 0;
+            }
             break;
     }
     generatePreview();

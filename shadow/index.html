@@ -65,13 +65,13 @@
                 <div>
                     <label class="config-label" for="config-shadow-opacity">Shadow opacity</label>
                     <input onchange="readParameters(4)" type="number" value="221" title="Shadow opacity (0 to 255)"
-                            class="config" step=1 id="config-shadow-opacity"></input>
+                            class="config" step=1 min=0 max=255 id="config-shadow-opacity"></input>
                     <button onClick="revertConfig(4)">default</button>
                 </div>
                 <div>
                     <label class="config-label" for="config-shadow-color">Shadow brightness</label>
                     <input onchange="readParameters(5)" type="number" value="0" title="Shadow brightness (0 to 255)"
-                            class="config" step=1 id="config-shadow-color"></input>
+                            class="config" step=1 min=0 max=255 id="config-shadow-color"></input>
                     <button onClick="revertConfig(5)">default</button>
                 </div>
             </div>

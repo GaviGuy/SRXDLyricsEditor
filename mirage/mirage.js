@@ -26,8 +26,10 @@ async function init() {
     readParameters(0);
     readParameters(1);
     readParameters(2);
-    readParameters(3);
     readParameters(4);
+    let seed = document.getElementById("config-seed");
+    if (seed.value == 0) revertConfig(3);
+    else readParameters(3);
 }
 init();
 
@@ -48,8 +50,7 @@ function readParameters (index) {
             break;
         case 3:
             element = document.getElementById("config-seed");
-            if(!element.value) revertConfig(3);
-            else seed = element.value;
+            seed = element.value;
             break;
         case 4:
             element = document.getElementById("config-gradual-mode");
@@ -108,6 +109,7 @@ function addSourceContainer() {
     let newCount = newElem.appendChild(document.createElement("input"));
     newCount.type = "number";
     newCount.setAttribute("onchange", "generatePreview()");
+    newCount.setAttribute("min", "0");
     newCount.value = 2;
     newCount.classList.add("config");
     newCount.classList.add("count-input");
@@ -120,6 +122,8 @@ function addSourceContainer() {
     let newAlpha = newElem.appendChild(document.createElement("input"));
     newAlpha.type = "number";
     newAlpha.setAttribute("onchange", "generatePreview()");
+    newAlpha.setAttribute("min", "0");
+    newAlpha.setAttribute("min", "255");
     newAlpha.value = 128;
     newAlpha.classList.add("config");
     newAlpha.classList.add("alpha-input");
@@ -144,12 +148,27 @@ function readPhrases() {
     spreads = [];
     for(let i = 0; i < inputElems.length; i++) {
         for(let j = 0; j < inputElems[i].children.length; j++) {
+            let val = inputElems[i].children[j].value;
             if(inputElems[i].children[j].classList.contains("phrase-input"))
-                strings[i] = inputElems[i].children[j].value;
-            else if(inputElems[i].children[j].classList.contains("count-input"))
-                counts[i] = Number(inputElems[i].children[j].value);
-            else if(inputElems[i].children[j].classList.contains("alpha-input"))
-                alphas[i] = Number(inputElems[i].children[j].value);
+                strings[i] = val;
+            else if(inputElems[i].children[j].classList.contains("count-input")) {
+                if(Number(val) < 0) {
+                    val = 0;
+                    inputElems[i].children[j].value = 0;
+                }
+                counts[i] = Number(val);
+            }
+            else if(inputElems[i].children[j].classList.contains("alpha-input")) {
+                if(Number(val) > 255) {
+                    val = 255;
+                    inputElems[i].children[j].value = 255;
+                }
+                if(!Number(val)) {
+                    val = 0;
+                    inputElems[i].children[j].value = 0;
+                }
+                alphas[i] = Number(val);
+            }
             else if(inputElems[i].children[j].classList.contains("spread-input"))
                 spreads[i] = inputElems[i].children[j].checked;
         }

@@ -47,6 +47,14 @@ function readParameters (index) {
         case 4:
             element = document.getElementById("config-impact-opacity");
             impactOpacity = Number(element.value);
+            if(impactOpacity > 255) {
+                impactOpacity = 255;
+                element.value = 255;
+            }
+            if(!impactOpacity || impactOpacity < 0) {
+                impactOpacity = 0;
+                element.value = 0;
+            }
             break;
         case 5:
             element = document.getElementById("config-spacing-multiplier");
