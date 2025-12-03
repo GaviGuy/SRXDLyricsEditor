@@ -168,33 +168,75 @@ function calculateRomajiPositions(romajiArray, initialPos) {
         }
     }
     else {
-        let i = 0;
-        while(i < romajiArray.length) {
-            let last = romajiArray[i][romajiArray[i].length-1];
-            let wordWidth = 0;
-            if(romajiArray[i] != '*' && romajiArray[i] != '*-') {
-                wordWidth = getWordWidth(romajiArray[i], romajiSize);
-            }
-            let wordLength = 1;
-            while(last == '-' || last == '=') {
-                if(romajiArray[i+wordLength] != '*-') {
-                    wordWidth += getWordWidth(trimSyllable(romajiArray[i+wordLength]), romajiSize);
-                }
-                last = romajiArray[i + wordLength][romajiArray[i + wordLength].length-1];
-                wordLength++;
-            }
-            
-            let wordStartPos = initialPos + kanaSpacing * (i + (wordLength - 1) / 2) + (kanaSize - wordWidth) / 2; 
-            let aOffset = 0;
-            for(let j = 0; j < wordLength; j++) {
-                ret[i+j] = wordStartPos + aOffset;
-                if(romajiArray[i+j] != '*' && romajiArray[i+j] != '*-')
-                    aOffset += getWordWidth(trimSyllable(romajiArray[i+j]), romajiSize);
-            }
+
+        // obtain base starting word lengths
+        let words = [];
+        let wordInd = 0;
+        for(let i = 0; i < romajiArray.length;) {
+            words[wordInd] = i;
+            let wordLength = calculateRomajiWordLength(romajiArray, i);
             i += wordLength;
+            wordInd++;
+            if(wordInd > 100) { console.error("loop!"); break;}
+        }
+
+        // collision test
+        for(let i = 0; i < words.length - 1; i++) {
+            let width1 = calculateRomajiWordWidth(romajiArray, words[i], words[i+1]);
+            let end1 = calculateRomajiWordStartPos(words[i], words[i+1], width1)
+                    + width1 + spaceWidth * romajiSize;
+            let endInd;
+            if(i < words.length - 2) endInd = words[i+2];
+            else endInd = romajiArray.length;
+            let width2 = calculateRomajiWordWidth(romajiArray, words[i+1], endInd);
+            let start2 = calculateRomajiWordStartPos(words[i+1], endInd, width2);
+
+            if(end1 > start2) {
+                words.splice(i+1, 1);
+                i = -1;
+            }
+        }
+
+        for(let i = 0; i < words.length; i++) {
+            let ind1 = words[i];
+            let ind2;
+            if(i < words.length - 1) ind2 = words[i+1];
+            else ind2 = romajiArray.length;
+            let wordWidth = calculateRomajiWordWidth(romajiArray, ind1, ind2);
+            let startPos = calculateRomajiWordStartPos(ind1, ind2, wordWidth,);
+            let aOffset = 0;
+            for(let j = ind1; j < ind2; j++) {
+                ret[j] = initialPos + startPos + aOffset;
+                aOffset += getWordWidth(trimSyllable(romajiArray[j]));
+                let last = getLastChar(romajiArray[j]);
+                if(!(last == '-' || last == '=')) {
+                    aOffset += spaceWidth * romajiSize;
+                }
+            }
         }
     }
     return ret;
+}
+
+function calculateRomajiWordStartPos(startInd, endInd, width) {
+    let wordLength = endInd - startInd;
+    return kanaSpacing * (startInd + (wordLength - 1) / 2) + (kanaSize - width) / 2;
+}
+
+function calculateRomajiWordWidth(arr, startInd, endInd) {
+    let str = "";
+    for(let i = startInd; i < endInd; i++) {
+        str += trimSyllable(arr[i]);
+    }
+    return getWordWidth(str, romajiSize);
+}
+
+function calculateRomajiWordLength(arr, startInd) {
+    for(let i = startInd; i < arr.length; i++) {
+        let last = arr[i][arr[i].length-1];
+        if (!(last == '-' || last == '=')) return i - startInd + 1;
+    }
+    return arr.length-startInd;
 }
 
 function isPolyOnic (string) {
@@ -208,7 +250,7 @@ function isPolyOnic (string) {
         // any other 2-letter config
         else return true;
     }
-    // consonant-y-vowel or consonant-h-vowel, eg. "sha", "kyu", "chi"
+    // tsu or consonant-y-vowel or consonant-h-vowel, eg. "sha", "kyu", "chi"
     if(string[2] == 'y' || string[2] == 'h' && !(reg.test(string[0])) && string[3] == vowel || string == 'tsu') return false;
     return true;
 

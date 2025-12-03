@@ -25,9 +25,6 @@
                 <br>
                 <textarea onchange="readParameters(-1)" id="input-japanese" rows=2 cols=80
                         title="Kana input field"></textarea>
-                <br>
-                <button disabled=true onclick="generateRomaji()">Generate Romaji (unfinished)</button>
-                <button disabled=true onclick="generateFurigana()">Generate Furigana (unfinished)</button>
             </div>
             <div>
                 Romaji or furigana goes here. Check for accuracy, pacing, etc.<br>
@@ -106,7 +103,7 @@
                 <div>
                     <label class="config-label" for="config-romaji-mode">Centered mode</label>
                     <input onchange="readParameters(-1)" type="checkbox" checked = true
-                    title="Render the romaji normally spaced instead of near their source kana"
+                    title="Render pronunciations spaced normally instead of near their source kana"
                             id="config-romaji-mode"></input>
                 </div>
             </div>

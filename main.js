@@ -1,8 +1,14 @@
+const spaceWidth = 0.25;
+
 function getWordWidth (word, fontSize) {
     let elem = document.getElementById("widther");
     elem.textContent = word;
     elem.style.fontSize = fontSize + "px";
     return elem.clientWidth;
+}
+
+function getLastChar(str) {
+    return str[str.length - 1]
 }
 
 function appendToPreview(previewElement, posX, posY, size, text, alpha) {
@@ -13,7 +19,7 @@ function appendToPreview(previewElement, posX, posY, size, text, alpha) {
     let newElement = previewElement.appendChild(document.createElement("p"));
     newElement.style = `font-weight: 800; position: absolute;`
                     + `left: ${2* posX}px; top: ${2* posY}px; font-size:${2* size}px;`
-                    + `color: #FFFFFF${str}; outline: #000000`;
+                    + `color: #FFFFFF${str}`;
     newElement.textContent = text;
 }
 
@@ -27,7 +33,7 @@ function toColorString (c, a) {
     let aStr = a.toString(16);
     if(a < 16) aStr = "0" + aStr;
     let ret = "#" + cStr + cStr + cStr + aStr;
-    return ret;
+    return ret.toUpperCase();
 }
 
 function toColorString2 (c, a) {
@@ -35,8 +41,8 @@ function toColorString2 (c, a) {
     if(a < 0) a = 0;
     if(!c && c != 0 || c > 255) c = 255;
     if(c < 0) c = 0;
-    a = Math.floor(a/16);
-    c = Math.floor(c/16);
+    a = Math.round(a/17);
+    c = Math.round(c/17);
     let aStr = a.toString(16);
     let cStr = c.toString(16);
     let ret = "#" + cStr + cStr + cStr + aStr;
@@ -57,8 +63,8 @@ function appendToPreview2(previewElement, obj, trim) {
     if((obj.a) < 16) aStr = '0' + aStr;
     let newElement = previewElement.appendChild(document.createElement("p"));
     newElement.style = `font-weight: 800; position: absolute;`
-                    + `left: ${2*(obj.x)}px; top: ${60+2*(obj.y - obj.s * 1.2)}px; font-size:${2*(obj.s)}px;`
-                    + `color: ${cStr + aStr};`;
+                    + `left: ${2*(obj.x)}px; top: ${60+2*(obj.y - obj.s * 1.2)}px;`
+                    + `font-size:${2*(obj.s)}px; color: ${cStr + aStr};`;
     if(trim) newElement.textContent = trimSyllable(obj.t).trim();
     else newElement.textContent = obj.t;
 }
