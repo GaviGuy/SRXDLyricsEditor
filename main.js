@@ -50,8 +50,12 @@ function toColorString2 (c, a) {
     if(a < 0) a = 0;
     if(!c && c != 0 || c > 255) c = 255;
     if(c < 0) c = 0;
-    a = Math.round(a/17);
-    c = Math.round(c/17);
+    
+    if(a < 9 && a > 0) a = 1;
+    else a = Math.round(a/17);
+    if(c < 9 && c > 0) c = 1;
+    else c = Math.round(c/17);
+    
     let aStr = a.toString(16);
     let cStr = c.toString(16);
     let ret = "#" + cStr + cStr + cStr + aStr;
