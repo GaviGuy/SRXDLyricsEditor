@@ -1,8 +1,4 @@
 # SRXDLyricsEditor
-A program to assist in making lyrics for Spin Rhythm XD.
+A program to assist in making lyrics for Spin Rhythm XD.Features many different generators for different kinds of special effect text.
 
-Todo:
-
-* collision detection and prevention
-* support for more character widths
-* automatic romaji/furigana generation
+Please contact me if you have a request or bug to report
