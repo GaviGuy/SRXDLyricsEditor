@@ -16,6 +16,13 @@ const defaultTextSize = 10;
 const defaultAlpha = 255;
 const defaultCount = 2;
 
+const spreadTypes = ["none", "linear", "circumference", "area"];
+const spreadDescs = [
+    "text will be perfectly centered",
+    "text will be spread linearly from (-x, -y) to (x, y)",
+    "text will be spread evenly along the outer circumference of the given range",
+    "text will be spread randomly within the range given by x and y"];
+
 let maxX = defaultMaxX;
 let maxY = defaultMaxY;
 let textSize = defaultTextSize;
@@ -23,6 +30,7 @@ let mode = 0;
 
 
 async function init() {
+    addSourceContainer();
     readParameters(0);
     readParameters(1);
     readParameters(2);
@@ -40,7 +48,7 @@ function readParameters (index) {
             element = document.getElementById("config-max-x");
             val = validateNumber(element.value);
             if(val == val) maxX = val;
-            element.value = maxY;
+            element.value = maxX;
             break;
         case 1:
             element = document.getElementById("config-max-y");
@@ -72,7 +80,7 @@ function revertConfig(index) {
         case 0:
             element = document.getElementById("config-max-x");
             element.value = defaultMaxX;
-            maxM = defaultMaxX;
+            maxX = defaultMaxX;
             break;
         case 1:
             element = document.getElementById("config-max-y");
@@ -129,7 +137,7 @@ function addSourceContainer() {
     newAlpha.type = "number";
     newAlpha.setAttribute("onchange", "generatePreview()");
     newAlpha.setAttribute("min", "0");
-    newAlpha.setAttribute("min", "255");
+    newAlpha.setAttribute("max", "255");
     newAlpha.value = 128;
     newAlpha.classList.add("config");
     newAlpha.classList.add("alpha-input");
@@ -139,11 +147,24 @@ function addSourceContainer() {
     newLabel.setAttribute("for", "spread-input");
     newLabel.textContent = "Spread";
 
-    let newCheck = newElem.appendChild(document.createElement("input"));
-    newCheck.type = "checkbox";
-    newCheck.setAttribute("onchange", "generatePreview()");
-    newCheck.checked = true;
-    newCheck.classList.add("spread-input");
+    let newDrop = newElem.appendChild(document.createElement("select"));
+    newDrop.setAttribute("onchange", "updateTooltips()");
+    newDrop.classList.add("spread-dropdown");
+    newDrop.setAttribute("title", spreadDescs[3]);
+
+    for(let i in spreadTypes) {
+        let opt = newDrop.appendChild(document.createElement("option"));
+        opt.setAttribute("value", i);
+        opt.innerText = spreadTypes[i];
+        opt.setAttribute("title", spreadDescs[i]);
+        if(i == 3) opt.setAttribute("selected", true);
+    }
+
+    // let newCheck = newElem.appendChild(document.createElement("input"));
+    // newCheck.type = "checkbox";
+    // newCheck.setAttribute("onchange", "generatePreview()");
+    // newCheck.checked = true;
+    // newCheck.classList.add("spread-input");
 
     readPhrases();
 }
@@ -174,8 +195,8 @@ function readPhrases() {
                 }
                 else inputElems[i].children[j].value = alphas[i];
             }
-            else if(inputElems[i].children[j].classList.contains("spread-input"))
-                spreads[i] = inputElems[i].children[j].checked;
+            else if(inputElems[i].children[j].classList.contains("spread-dropdown"))
+                spreads[i] = Number(inputElems[i].children[j].value);
         }
     }
     counts = newCounts;
@@ -191,10 +212,22 @@ function generatePreview () {
     for(let i = 0; i < syllables.length; i++) {
         for(let j = 0; j < syllables[i].length; j++) {
             if(syllables[i]) {
-                appendToPreview(previewElement, xPositions[i][j], yPositions[i][j], textSize, syllables[i][j], getAlphaByIndex(i));
+                appendToPreview(previewElement, xPositions[i][j], yPositions[i][j] + 24, textSize, syllables[i][j], getAlphaByIndex(i));
             }
         }
     }
+}
+
+function updateTooltips () {
+    let inputElems = document.getElementById("source-container").children;
+    for(let i in inputElems) {
+        if(typeof inputElems[i] == "object") {
+            let selectElem = inputElems[i].querySelector(".spread-dropdown");
+            let selectChildren = selectElem.children;
+            selectElem.setAttribute("title", selectChildren[selectElem.value].title);
+        }
+    }
+    generatePreview();
 }
 
 function getAlphaByIndex (index) {
@@ -275,6 +308,7 @@ function buildStrings() {
             startPos[i] = 80 - lineLength / 2;
         }
 
+        let randomStart = rando();
         for(let i = prevP; i < Number(counts[pInd]) + prevP; i++) { //repeat for each count in phrase
             syllables[i] = [];
             xPositions[i] = [];
@@ -284,9 +318,6 @@ function buildStrings() {
 
             let accumulatedOffset = 0;
             let numNewlines = 0;
-
-            let randoAngle = rando() * 2 * Math.PI;
-            let randoDistance = rando();
             for(let j = 0; j + numNewlines < syl.length; j++) { //for each syllable in phrase
                 while(syl[j + numNewlines] == "\\n") {
                     numNewlines++;
@@ -300,9 +331,33 @@ function buildStrings() {
                 xPositions[i][j] = startPos[numNewlines] + accumulatedOffset
                 yPositions[i][j] = yPos;
 
-                if(spreads[pInd]) {
-                    xPositions[i][j] += Math.cos(randoAngle) * randoDistance * maxX;
-                    yPositions[i][j] += Math.sin(randoAngle) * randoDistance * maxY;
+                switch(spreads[pInd]) {
+                    case 0:
+                        // no spread
+                        break;
+                    case 1:
+                        // linear spread
+                        if(Number(counts[pInd]) < 2) break;
+                        let progress = (i-prevP) / Number(counts[pInd] - 1);
+                        xPositions[i][j] += -maxX + maxX * 2 * progress;
+                        yPositions[i][j] += -maxY + maxY * 2 * progress;
+                        break;
+                    case 2:
+                        // circumference spread
+                        let angle = randomStart * 2 * Math.PI;
+                        angle += 2 * Math.PI / Number(counts[pInd]) * (i - prevP);
+                        xPositions[i][j] += Math.cos(angle) * maxX;
+                        yPositions[i][j] += Math.sin(angle) * maxY;
+                        break;
+                    case 3:
+                        // area spread
+                        let randoDistance = rando();
+                        let randoAngle = rando() * 2 * Math.PI;
+                        xPositions[i][j] += Math.cos(randoAngle) * randoDistance * maxX;
+                        yPositions[i][j] += Math.sin(randoAngle) * randoDistance * maxY;
+                        break;
+                    default:
+                        console.warn("unknown spread mode: " + spreads[pInd]);
                 }
                 
                 accumulatedOffset += getWordWidth(trimSyllable(newSyl), textSize);

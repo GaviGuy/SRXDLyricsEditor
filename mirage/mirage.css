@@ -11,6 +11,7 @@
 
 .phrase-config {
     display: inline-block;
+    margin-left: 4px;
     width: 70px;
 }
 
