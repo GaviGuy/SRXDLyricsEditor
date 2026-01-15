@@ -116,12 +116,15 @@ function trimSyllable (syl) {
     return syl + " ";
 }
 
-function getLineStartingPositions (sylArray, textSize, spaceMult) {
+function getLineStartingPositions (sylArray, textSize, spaceMult, blockAsterisk) {
     if(spaceMult != 0 && !spaceMult) spaceMult = 1;
     let str = "";
     let newlinesCount = 0;
     let positions = [];
     for(let i = 0; i < sylArray.length; i++) {
+        if(blockAsterisk && (sylArray[i] == '*' || sylArray[i] == '*-')) {
+            continue;
+        }
         if(sylArray[i] != "\\n") {
             str += trimSyllable(sylArray[i]);
         }

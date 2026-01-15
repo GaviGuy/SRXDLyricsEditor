@@ -163,15 +163,16 @@ function calculateRomajiPositions(romajiArray, initialPos) {
     let mode = document.getElementById("config-romaji-mode").checked;
     let ret = [];
     if(mode) {
-        let startPos = getLineStartingPositions(romajiArray, romajiSize)[0];
+        let startPos = getLineStartingPositions(romajiArray, romajiSize, "", true)[0];
         let aOffset = 0;
         for(let i = 0; i < romajiArray.length; i++) {
             ret[i] = startPos + aOffset;
             if(romajiArray[i] != '*' && romajiArray[i] != '*-') {
                 aOffset += getWordWidth(trimSyllable(romajiArray[i]), romajiSize);
-            }
-            if(romajiArray[i][romajiArray[i].length - 1] != '-') {
-                aOffset += 0.25 * romajiSize;
+
+                if(romajiArray[i][romajiArray[i].length - 1] != '-') {
+                    aOffset += 0.25 * romajiSize;
+                }
             }
         }
     }
@@ -190,12 +191,24 @@ function calculateRomajiPositions(romajiArray, initialPos) {
 
         // collision test
         for(let i = 0; i < words.length - 1; i++) {
+
+            //skip collision test for no-pronounces
+            let word = getRomajiWord(romajiArray, words[i], words[i+1]);
+            if(word == '')
+                continue;
+
             let width1 = calculateRomajiWordWidth(romajiArray, words[i], words[i+1]);
             let end1 = calculateRomajiWordStartPos(words[i], words[i+1], width1)
                     + width1 + spaceWidth * romajiSize;
             let endInd;
             if(i < words.length - 2) endInd = words[i+2];
             else endInd = romajiArray.length;
+
+            //skip collision test for no-pronounces
+            word = getRomajiWord(romajiArray, words[i+1], words[endInd]);
+            if(word == '')
+                continue;
+
             let width2 = calculateRomajiWordWidth(romajiArray, words[i+1], endInd);
             let start2 = calculateRomajiWordStartPos(words[i+1], endInd, width2);
 
@@ -210,6 +223,7 @@ function calculateRomajiPositions(romajiArray, initialPos) {
             let ind2;
             if(i < words.length - 1) ind2 = words[i+1];
             else ind2 = romajiArray.length;
+            // let word = getRomajiWord(romajiArray, ind1, ind2);
             let wordWidth = calculateRomajiWordWidth(romajiArray, ind1, ind2);
             let startPos = calculateRomajiWordStartPos(ind1, ind2, wordWidth,);
             let aOffset = 0;
@@ -234,7 +248,8 @@ function calculateRomajiWordStartPos(startInd, endInd, width) {
 function calculateRomajiWordWidth(arr, startInd, endInd) {
     let str = "";
     for(let i = startInd; i < endInd; i++) {
-        str += trimSyllable(arr[i]);
+        if(arr[i] != '*' && arr[i] != '*-')
+            str += trimSyllable(arr[i]);
     }
     return getWordWidth(str, romajiSize);
 }
@@ -245,6 +260,15 @@ function calculateRomajiWordLength(arr, startInd) {
         if (!(last == '-' || last == '=')) return i - startInd + 1;
     }
     return arr.length-startInd;
+}
+
+function getRomajiWord(arr, startInd, endInd) {
+    let ret = "";
+    for(let i = startInd; i < endInd; i++) {
+        if(arr[i] != '*' && arr[i] != '*-')
+            ret += trimSyllable(arr[i]);
+    }
+    return ret;
 }
 
 function isPolyOnic (string) {
