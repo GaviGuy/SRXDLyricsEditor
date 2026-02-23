@@ -163,7 +163,7 @@ function calculateRomajiPositions(romajiArray, initialPos) {
     let mode = document.getElementById("config-romaji-mode").checked;
     let ret = [];
     if(mode) {
-        let startPos = getLineStartingPositions(romajiArray, romajiSize, "", true)[0];
+        let startPos = getLineStartingPositions(romajiArray, romajiSize, 1, true)[0];
         let aOffset = 0;
         for(let i = 0; i < romajiArray.length; i++) {
             ret[i] = startPos + aOffset;
