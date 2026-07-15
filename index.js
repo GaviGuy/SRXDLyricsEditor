@@ -245,6 +245,12 @@ let previews = [
         a: furiganaA
     },
     {
+        title: "Solid Background",
+        link: "background",
+        description: "Render lyrics on top of a solid-colored background",
+        syllables: background
+    },
+    {
         title: "Mirage",
         link: "mirage",
         description: "Render text multiple times at a low opacity to create a blurry effect.",
@@ -285,7 +291,7 @@ let previews = [
         s: wideS,
         t: wideT,
         a: wideA
-    },
+    // },
     // {
     //   title: "Lyric Workshop",
     //   link: "workshop",
@@ -296,11 +302,6 @@ let previews = [
     //   t: ["wawa"],
     //   a: [255]
     // },
-    {
-      title: "Solid Background",
-      link: "background",
-      description: "render lyrics on top of a solid-colored background",
-      syllables: background
     // },
     // {
     //   title: "Rotate",
