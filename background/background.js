@@ -97,6 +97,17 @@ function generatePreview() {
     let aOffset = 0;
     let nNewlines = 0;
     let sInd = 0;
+    syllables[0] = {
+        x: -40,
+        y: -234,
+        s: 400,
+        t: "■",
+        a: bgOpacity,
+        c: bgLightness
+    };
+    appendToPreview2(previewElement, syllables[0]);
+    sInd++;
+
     for(let i = 0; i < syl.length;) {
         if(syl[i] == "\\n") {
             nNewlines++;
@@ -116,7 +127,7 @@ function generatePreview() {
         }
 
         let wOffset = 0;
-        let iOffset = 0;
+
         for(let j = 0; j < wordLen; j++) {
             syllables[sInd] = {
                 x: Math.round(startPos[nNewlines] + aOffset + wOffset),
