@@ -198,6 +198,40 @@ let shadow = [
     "c": 255
   }
 ]
+let background = [
+  {
+    "x": -40,
+    "y": -284,
+    "s": 400,
+    "t": "■",
+    "a": 68,
+    "c": 68
+  },
+  {
+    "x": 40,
+    "y": 8,
+    "s": 10,
+    "t": "That's",
+    "a": 255,
+    "c": 255
+  },
+  {
+    "x": 74,
+    "y": 8,
+    "s": 10,
+    "t": "not",
+    "a": 255,
+    "c": 255
+  },
+  {
+    "x": 95,
+    "y": 8,
+    "s": 10,
+    "t": "true!",
+    "a": 255,
+    "c": 255
+  }
+];
 
 let previews = [
     {
@@ -251,6 +285,32 @@ let previews = [
         s: wideS,
         t: wideT,
         a: wideA
+    },
+    // {
+    //   title: "Lyric Workshop",
+    //   link: "workshop",
+    //   description: "modify a lyric phrase's position, size, rotation, and more",
+    //   x: [50],
+    //   y: [0],
+    //   s: [10],
+    //   t: ["wawa"],
+    //   a: [255]
+    // },
+    {
+      title: "Solid Background",
+      link: "background",
+      description: "render lyrics on top of a solid-colored background",
+      syllables: background
+    // },
+    // {
+    //   title: "Rotate",
+    //   link: "rotate",
+    //   description: "Rotate an entire phrase (as opposed to the individual letters)",
+    //   x: [50],
+    //   y: [0],
+    //   s: [10],
+    //   t: ["wawa"],
+    //   a: [255]
     }
 ]
 

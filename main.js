@@ -45,7 +45,7 @@ function toColorString (c, a) {
     return ret.toUpperCase();
 }
 
-function toColorString2 (c, a) {
+function toColorString2 (c, a, skipAlpha) {
     if(!a && a != 0 || a > 255) a = 255;
     if(a < 0) a = 0;
     if(!c && c != 0 || c > 255) c = 255;
@@ -58,8 +58,17 @@ function toColorString2 (c, a) {
     
     let aStr = a.toString(16);
     let cStr = c.toString(16);
-    let ret = "#" + cStr + cStr + cStr + aStr;
+    let ret = "#" + cStr + cStr + cStr;
+    if(!skipAlpha) ret += aStr;
     return ret.toUpperCase();
+}
+
+function toAlphaString (a) {
+    if(!a && a != 0 || a > 255) a = 255;
+    if(a < 0) a = 0;
+
+    if(a < 16) return `#0${a.toString(16)}`;
+    else return `#${a.toString(16)}`;
 }
 
 function appendToPreview2(previewElement, obj, trim) {
