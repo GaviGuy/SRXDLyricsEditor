@@ -120,7 +120,7 @@ function generatePreview() {
         for(let j = 0; j < wordLen; j++) {
             syllables[sInd] = {
                 x: Math.round(startPos[nNewlines] + aOffset + wOffset),
-                y: Math.round(textSize * 1.2 * (nNewlines - (totalLines + 1) / 2)+20),
+                y: Math.round(verticalGap * (nNewlines - (totalLines - 1) / 2)),
                 s: textSize,
                 t: trimSyllable(syl[i+j]).trim(),
                 a: 255
