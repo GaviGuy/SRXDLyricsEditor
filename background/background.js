@@ -102,7 +102,7 @@ function generatePreview() {
         y: -234,
         s: 400,
         t: "■",
-        a: bgOpacity,
+        a: Math.floor(bgOpacity * 0.6),
         c: bgLightness
     };
     appendToPreview2(previewElement, syllables[0]);
