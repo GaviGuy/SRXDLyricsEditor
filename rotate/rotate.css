@@ -1,0 +1,7 @@
+#config[mode="single"]>div[class="double-angle"] {
+    display: none;
+}
+
+#config[mode="double"]>div[class="single-angle"] {
+    display: none;
+}
