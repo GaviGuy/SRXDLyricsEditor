@@ -162,7 +162,7 @@ function generateLyricString() {
         //else, empty string suffices
     }
     else {
-        bgColorString = toColorString2(bgLightness, bgOpacity, bgOpacity >= 255);
+        bgColorString = `<color=${toColorString2(bgLightness, bgOpacity, bgOpacity >= 255)}>`;
     }
 
     let squares = "■";
