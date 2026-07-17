@@ -24,7 +24,8 @@ init();
 function handleModeDropdown() {
     let drop = document.getElementById("config-rotation-mode");
     let config = document.getElementById("config");
-    switch(drop.selectedIndex) {
+    mode = drop.selectedIndex;
+    switch(mode) {
         case 0:
         case 1:
             config.setAttribute("mode", "single");
@@ -102,9 +103,68 @@ function revertConfig(index) {
 }
 
 function generatePreview() {
+    let stringIn = document.getElementById("input").value;
+    syllables = [];
+    switch(mode) {
+        case 0: // horizontal, rotate characters only
+            break;
+        case 1: // rotate word and position
+            break;
+        case 2: // horizontal, gradual character rotation
+            break;
+        case 3: // gradually rotate word and position
+            break;
+        default:
+            console.warn("what.");
+    }
 
 }
 
 function generateLyricString() {
+    let stringIn = document.getElementById("input").value;
+    let retString = `@<size=${textSize}>`;
 
+    console.warn(mode);
+    if(mode == 0 || mode == 2 && startAngle == endAngle) {
+        // don't use syllables, no need for <pos> or <voffset>
+        if(startAngle % 360 != 0) retString += `<rotate=${startAngle % 360}>`;
+        retString += stringIn.replace(/ *\\n */, "\n");
+    }
+    else if(mode == 2) {
+        // don't use syllables, no need for <pos> or <voffset>
+        // (but you do need to rerotate often)
+        
+        // lazy approach first, char by char
+        //todo: consider going by char spacing instead of char number
+        //todo: treat newlines differently? automatic line breaks?
+        //todo: optimize? do I really need to <rotate> every character?
+        for(let i = 0; i < stringIn.length; i++) {
+            if(stringIn.charAt(i) == " ") {
+                retString += stringIn.charAt(i);
+                continue;
+            }
+            if(i < stringIn.length - 2 && stringIn.charAt(i) == "\\" && stringIn.charAt(i+1) == "n") {
+                retString += "\n";
+                i++;
+                continue;
+            }
+            if(i < stringIn.length - 2 && stringIn.charAt(i) == "-" && stringIn.charAt(i+1) == " ") {
+                retString += "-";
+                continue;
+            }
+            if(i < stringIn.length - 2 && stringIn.charAt(i) == "=" && stringIn.charAt(i+1) == " ") {
+                retString += "=";
+                continue;
+            }
+            
+            let rot = Math.round(i / (stringIn.length - 1) * (endAngle - startAngle) + startAngle);
+            retString += `<rotate=${rot}>${stringIn.charAt(i)}`;
+        }
+    }
+    else {
+        // use syllables
+    }
+    retString = retString.replace(/ *\n */, "\n")
+    navigator.clipboard.writeText(retString);
+    console.log(retString);
 }
