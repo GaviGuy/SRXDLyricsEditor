@@ -192,6 +192,4 @@ function generateLyricString() {
     retString = retString.trim();
     navigator.clipboard.writeText(retString);
     console.log(retString);
-
-    console.log(syllables);
 }
