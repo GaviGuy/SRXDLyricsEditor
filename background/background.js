@@ -168,25 +168,30 @@ function generateLyricString() {
     let squares = "■";
     if(extraSquares) squares = "■■■";
 
+    let retString;
+
     //return short string if there's no text
-    if(stringIn.length < 1) return `@<size=5000em>${bgColorString}${squares}\n`
+    if(stringIn.length < 1) {
+        retString = `@<size=5000em>${bgColorString}${squares}\n`
+    }
+    else {
+        retString = `@<size=5000em>${bgColorString}<line-height=0>${squares}\n`;
+        if(bgColorString.length > 0)
+            retString += "</color>";
+        retString += `<size=${textSize}>`;
 
-    let retString = `@<size=5000em>${bgColorString}<line-height=0>${squares}\n`;
-    if(bgColorString.length > 0)
-        retString += "</color>";
-    retString += `<size=${textSize}>`;
+        let numLines = (stringIn.match(/(\\n)/g) || []).length + 1;
+        //todo: calculate if any lines auto wrap
 
-    let numLines = (stringIn.match(/(\\n)/g) || []).length + 1;
-    //todo: calculate if any lines auto wrap
+        let startInd = 0;
+        for(let i = 0; i < numLines; i++) {
+            let endInd = stringIn.indexOf("\\n", startInd);
+            if(endInd < 0) endInd = stringIn.length;
 
-    let startInd = 0;
-    for(let i = 0; i < numLines; i++) {
-        let endInd = stringIn.indexOf("\\n", startInd);
-        if(endInd < 0) endInd = stringIn.length;
-
-        retString += `<voffset=${recenterY - (i - (numLines - 1) / 2) * verticalGap}>`;
-        retString += stringIn.substring(startInd, endInd).trim() + "\n";
-        startInd = endInd + 2;
+            retString += `<voffset=${recenterY - (i - (numLines - 1) / 2) * verticalGap}>`;
+            retString += stringIn.substring(startInd, endInd).trim() + "\n";
+            startInd = endInd + 2;
+        }
     }
 
     retString = retString.trim();
