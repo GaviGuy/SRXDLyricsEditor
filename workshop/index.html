@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A web-based application for creating and previewing lyrics for Spin Rhythm XD">
+    <title>SRXD Lyrics Editor</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="workshop.css">
+    <script defer type="text/javascript" src="../main.js"></script>
+    <script defer type="text/javascript" src="workshop.js"></script>
+
+</head>
+<body>
+    <div class="main">
+        <div class="column-left">
+            <div>
+                This tool will modify the value of a single tag type in bulk. For example,
+                increasing all &lt;size&gt; tags by 20, or moving all &lt;voffset&gt; down by 40.<br>
+                <br>
+                Input an entire phrase of text, including hyphens, newlines, and &lt;tags&gt;<br>
+                <br>
+                <textarea onchange="generateOutput()" id="phrase-input" rows=2 cols=80
+                        title="Input field"></textarea>
+            </div>
+            <div>
+                <div>
+                    <label class="config-label" for="config-tag">Tag type to change</label>
+                    <select onchange="handleTagDropdown()"
+                            title=""
+                            id="config-tag">
+                        <option selected title="">pos</option>
+                        <option title="">voffset</option>
+                        <option title="">size</option>
+                        <option title="">rotate</option>
+                        <option title="">other...</option>
+                    </select>
+                </div>
+                <div id="other-selected" class="hidden">
+                    <label>Specify: </label>
+                    <input onchange="generateOutput()" 
+                            id="other-input"></input>
+                </div>
+                <br>
+                <div>
+                    <label>Change amount: </label>
+                    <input onchange="generateOutput()" 
+                            id="modifier-input"></input>
+                </div>
+            </div>
+            <div class="output" id="output-text">
+            </div>
+            <div>
+                <button onclick="generateLyricString()"
+                        title="Copy output string to clipboard, for use in further workshopping or in SRXD">Copy Output to Clipboard</button>
+            </div>
+        </div>
+    </div>
+    <div>
+        <button onclick="document.location='..'">Back to index</button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,9 @@
+.hidden {
+    display: none;
+}
+
+.output {
+    padding: 1rem;
+    font-size: 0.875rem;
+    background-color: var(--color-bg-dark);
+}
