@@ -40,7 +40,9 @@ function generateOutput() {
         
         ind = input.indexOf(">", newInd);
         let val = parseFloat(input.substring(newInd, ind)) + mod;
-        if(Math.abs(val - Math.round(val)) > 0.1)
+        if(val != val)
+            ret += input.substring(newInd, ind);
+        else if(Math.abs(val - Math.round(val)) > 0.1)
             ret += val.toFixed(1);
         else
             ret += Math.round(val);
