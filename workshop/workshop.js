@@ -19,14 +19,15 @@ function handleTagDropdown() {
 
 function generateOutput() {
     let input = document.getElementById("phrase-input").value;
-    if(input.length < 1) {
-        document.getElementById("output-text").innerText = "";
-        return;   
-    }
 
     let tag = getTagType();
 
-    let mod = Number(document.getElementById("modifier-input").value);
+    let mod = validateNumber(document.getElementById("modifier-input").value);
+
+    if(input.length < 1 || tag == "=" || !mod || mod != mod) {
+        document.getElementById("output-text").innerText = input;
+        return;   
+    }
 
     let ret = "";
 
