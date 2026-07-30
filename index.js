@@ -247,7 +247,7 @@ let previews = [
     {
         title: "Solid Background",
         link: "background",
-        description: "Render lyrics on top of a solid-colored background",
+        description: "Render lyrics on top of a solid-colored background.",
         syllables: background
     },
     {

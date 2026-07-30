@@ -1,6 +1,7 @@
 :root {
     --color-bg: #221122;
     --color-bg-light: #331933;
+    --color-bg-dark: #110911;
     --color-main: rgb(255, 255, 255);
 
     font-family: "Montserrat", sans-serif;

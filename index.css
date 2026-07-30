@@ -3,9 +3,30 @@
     flex-flow: column wrap;
 }
 
+.index-topter {
+    display: block;
+    margin: 1rem;
+    padding: 1rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    background-color: #331A33;
+}
+
+.index-topter > .chapter-label {
+    font-size: 2rem;
+    display: inline-block;
+    margin: 0;
+    margin-left: 2rem;
+}
+
+.index-topter > span {
+    display: inline-block;
+    margin-left: 1rem;
+    vertical-align: middle;
+}
+
 .index-chapter {
     display: inline-block;
-    font-size: 2rem;
     margin: 1rem;
     padding: 1rem;
     background-color: #331A33;
