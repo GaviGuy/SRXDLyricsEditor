@@ -143,7 +143,7 @@ function generatePreview() {
         appendToPreview2(previewElement, syllables[sInd]);
         sInd++;
 
-        if(i >= romajiArray.length || romajiArray[i] == '*' || romajiArray[i] == '*-') {
+        if(i >= romajiArray.length || isSkip(romajiArray[i])) {
             syllables[sInd] = undefined;
         }
         else {
@@ -167,7 +167,7 @@ function calculateRomajiPositions(romajiArray, initialPos) {
         let aOffset = 0;
         for(let i = 0; i < romajiArray.length; i++) {
             ret[i] = startPos + aOffset;
-            if(romajiArray[i] != '*' && romajiArray[i] != '*-') {
+            if(!isSkip(romajiArray[i])) {
                 aOffset += getWordWidth(trimSyllable(romajiArray[i]), romajiSize);
 
                 if(romajiArray[i][romajiArray[i].length - 1] != '-') {
@@ -248,7 +248,7 @@ function calculateRomajiWordStartPos(startInd, endInd, width) {
 function calculateRomajiWordWidth(arr, startInd, endInd) {
     let str = "";
     for(let i = startInd; i < endInd; i++) {
-        if(arr[i] != '*' && arr[i] != '*-')
+        if(!isSkip(arr[i]))
             str += trimSyllable(arr[i]);
     }
     return getWordWidth(str, romajiSize);
@@ -265,7 +265,7 @@ function calculateRomajiWordLength(arr, startInd) {
 function getRomajiWord(arr, startInd, endInd) {
     let ret = "";
     for(let i = startInd; i < endInd; i++) {
-        if(arr[i] != '*' && arr[i] != '*-')
+        if(!isSkip(arr[i]))
             ret += trimSyllable(arr[i]);
     }
     return ret;
@@ -365,4 +365,11 @@ function generateLyricString() {
     retString = retString.trim();
     navigator.clipboard.writeText(retString);
     console.log(retString);
+}
+
+function isSkip(str) {
+    const PATTERNS = ["*", "*-", "＊", "＊-"];
+    if(PATTERNS.includes(str))
+        return true;
+    return false;
 }
