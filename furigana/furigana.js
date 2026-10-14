@@ -366,10 +366,3 @@ function generateLyricString() {
     navigator.clipboard.writeText(retString);
     console.log(retString);
 }
-
-function isSkip(str) {
-    const PATTERNS = ["*", "*-", "＊", "＊-"];
-    if(PATTERNS.includes(str))
-        return true;
-    return false;
-}

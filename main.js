@@ -71,6 +71,9 @@ function toAlphaString (a) {
     else return `#${a.toString(16)}`;
 }
 
+//todo: add a function/process to read lengths of whole phrases, not just word/char for word/char
+// (thus accounting for kerning)
+
 function appendToPreview2(previewElement, obj, trim) {
     if(!obj) return;
     if(!(obj.a) && obj.a != 0 || (obj.a) > 255) obj.a = 255;
@@ -131,12 +134,13 @@ function getLineStartingPositions (sylArray, textSize, spaceMult, blockAsterisk)
     let newlinesCount = 0;
     let positions = [];
     for(let i = 0; i < sylArray.length; i++) {
-        if(blockAsterisk && (sylArray[i] == '*' || sylArray[i] == '*-')) {
-            continue;
-        }
-        if(sylArray[i] != "\\n") {
+
+        // add the syllable's width if it's not a newline or skipped asterisk
+        if(sylArray[i] != "\\n" && !(blockAsterisk && isSkip(sylArray[i]))) {
             str += trimSyllable(sylArray[i]);
         }
+
+        // every newline (or the end of the array), calculate the line length
         if(sylArray[i] == "\\n" || i == sylArray.length - 1) {
             positions[newlinesCount] = getWordWidth(str.trim(), textSize);
 
@@ -149,4 +153,12 @@ function getLineStartingPositions (sylArray, textSize, spaceMult, blockAsterisk)
         }
     }
     return positions;
+}
+
+
+function isSkip(str) {
+    const PATTERNS = ["*", "*-", "＊", "＊-"];
+    if(PATTERNS.includes(str))
+        return true;
+    return false;
 }
